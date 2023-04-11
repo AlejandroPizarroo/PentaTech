@@ -21,7 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
   },
   "eslintConfig": {
     "extends": [
@@ -40,5 +40,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "Proyecto desarrollado por el equipo 34 para la UF: Planeación de sistemas de software (Grupo 103) <br />\r Integrantes: <br />\r A01632621 | Hector Rafael Alvarez Aceves <br />\r A01633784 | Alejandro Pizarro Chávez <br />\r A01634154 | Diego Rosas <br />\r A01639224 | Fausto Alejandro Palma Cervantes <br />\r A01640260 | Alan Ricardo Vilchis Arceo <br />",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }
