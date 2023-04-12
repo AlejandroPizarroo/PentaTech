@@ -1,12 +1,22 @@
 import React from 'react';
+import {Dropdown} from 'carbon-components-react';
 
+const items = [
+    { id: 'option1', text: 'Option 1' },
+    { id: 'option2', text: 'Option 2' },
+    { id: 'option3', text: 'Option 3' },
+];
 const LandingPage = () => {
     return (
-        <div className="landing-page">
-            <h1>Welcome to my Landing Page</h1>
-            <p>Thanks for visiting my website. Here you will find all sorts of interesting information about me and my work.</p>
-            <button>Learn More</button>
-        </div>
+        <div style={{ width: 600 }}>
+                <Dropdown
+                  id="inline"
+                  label="Dropdown menu options"
+                  type="inline"
+                  items={items}
+                  itemToString={(item) => (item ? item.text : '')}
+                />
+              </div>
     );
 };
 
