@@ -1,0 +1,23 @@
+.barraLateral {
+  flex: 1;
+  background-color: #000;
+}
+.barraBusqueda{
+  padding-top: 50px;
+}
+.align-right {
+  margin-left: auto;
+}
+.left {
+  flex: 2;
+  background-color: #fff;
+}
+.container {
+  display: flex;
+  height: 100vh;
+  width: 250vh;
+}
+
+body {
+  overflow-x: hidden;
+}

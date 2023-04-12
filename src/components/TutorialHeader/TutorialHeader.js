@@ -37,7 +37,7 @@ const TutorialHeader = () => (
                     Carbon Tutorial
                 </HeaderName>
                 <HeaderNavigation aria-label="Carbon Tutorial">
-                    <HeaderMenuItem element={Link} to="/repos">Repositories</HeaderMenuItem>
+                    <HeaderMenuItem element={Link} to="/searchpage">Repositories</HeaderMenuItem>
                 </HeaderNavigation>
                 <SideNav
                     aria-label="Side navigation"
@@ -46,7 +46,7 @@ const TutorialHeader = () => (
                 >
                     <SideNavItems>
                         <HeaderSideNavItems>
-                            <HeaderMenuItem element={Link} to="/repos">Repositories</HeaderMenuItem>
+                            <HeaderMenuItem element={Link} to="/searchpage">Repositories</HeaderMenuItem>
                         </HeaderSideNavItems>
                     </SideNavItems>
                 </SideNav>

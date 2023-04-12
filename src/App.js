@@ -2,25 +2,24 @@ import './App.css';
 import './app.scss';
 import { Route, Switch } from 'react-router-dom';
 import LandingPage from './content/LandingPage';
-import RepoPage from './content/RepoPage';
-import { Content } from 'carbon-components-react';
+import SearchPage from './content/SearchPage';
+import LoginPage from './content/LoginPage';
+import { Content} from 'carbon-components-react';
 import React, { Component } from 'react';
-import TutorialHeader from './components/TutorialHeader';
 
 class App extends Component {
   render() {
     return (
         <>
-          <TutorialHeader />
           <Content>
               <Switch>
+                  <Route path="/loginpage" component={LoginPage} />
                   <Route exact path="/" component={LandingPage} />
-                  <Route path="/repos" component={RepoPage} />
+                  <Route path="/searchpage" component={SearchPage} />
               </Switch>
           </Content>
         </>
     );
   }
 }
-
 export default App;
