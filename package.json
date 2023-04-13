@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@carbon/icons-react": "10.22.0",
+    "@carbon/react": "1.1.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,7 +15,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "5.0.0",
     "react-scripts": "5.0.1",
-    "sass": "1.29.0",
+    "sass": "1.51.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -43,7 +44,10 @@
   },
   "description": "Proyecto desarrollado por el equipo 34 para la UF: Planeación de sistemas de software (Grupo 103) <br />\r Integrantes: <br />\r A01632621 | Hector Rafael Alvarez Aceves <br />\r A01633784 | Alejandro Pizarro Chávez <br />\r A01634154 | Diego Rosas <br />\r A01639224 | Fausto Alejandro Palma Cervantes <br />\r A01640260 | Alan Ricardo Vilchis Arceo <br />",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-plugin-react": "^7.32.2"
+  },
   "author": "",
   "license": "ISC"
 }

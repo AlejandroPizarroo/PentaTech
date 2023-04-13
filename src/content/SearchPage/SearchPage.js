@@ -1,5 +1,4 @@
-import {useEffect} from 'react';
-
+import React, {useEffect} from 'react';
 import {
     Switcher20
 } from '@carbon/icons-react';
@@ -62,7 +61,7 @@ const SearchPage = () => {
                        <div className={'dropDown'}>
                            <Dropdown
                                id="default"
-                               label="Seleccione un conjunto de datos a analizar"
+                               label="Seleccione un conjunto de datos"
                                items={items}
                                itemToString={(item) => (item ? item.text : '')}
                            />
