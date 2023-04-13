@@ -1,7 +1,6 @@
 .barraLateral {
   flex: 1;
   background-color: #161616;
-  margin-left: auto;
 }
 .searchRow{
   padding-top: 15px;
@@ -19,15 +18,15 @@
 .container {
   display: flex;
   height: 100vh;
-  width:100vw;
-
+  width:96.7vw;
+  padding-top: 15px;
 }
 body {
   overflow-x: hidden;
 }
 .searchBarDiv{
   height:200px;
-  width: 400px;
+  width: 150px;
 }
 .searchButtonDiv{
   height: 200px;
