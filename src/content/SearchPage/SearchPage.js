@@ -16,9 +16,9 @@ import  {
 import {Link} from "react-router-dom";
 
 const items = [
-    { id: 'option1', text: 'Option 1' },
-    { id: 'option2', text: 'Option 2' },
-    { id: 'option3', text: 'Option 3' },
+    { id: 'IBMdata1', text: 'Certificados 1' },
+    { id: 'IBMdata2', text: 'Certificados 2' },
+    { id: 'IBMdata3', text: 'Certificados 3' },
 ];
 
 const SearchPage = () => {
@@ -81,8 +81,11 @@ const SearchPage = () => {
                                <Button>Buscar</Button>
                            </Link>
                        </div>
-
                    </div>
+                   <div className={"whiteLine"}>
+                       <hr/>
+                   </div>
+
                </div>
            </div>
        </>

@@ -1,17 +1,18 @@
 .barraLateral {
-  flex: 2;
+  flex: 1;
   background-color: #161616;
 }
 .searchRow{
   padding-top: 15px;
   display: flex;
   flex-direction: row;
+  height: 80px;
 }
 .align-right {
   margin-left: auto;
 }
 .left {
-  flex: 4;
+  flex: 3;
   background-color: white;
 }
 .container {
@@ -20,16 +21,16 @@
   width:100vw;
 }
 body {
-  overflow-x: hidden;
+  //overflow-x: hidden;
 }
 .searchBarDiv{
   height:200px;
-  width: 250px;
+  width: 200px;
   padding-left: 20px;
 }
 .searchButtonDiv{
   height: 200px;
-  padding-left: 20px;
+  padding-left: 15px;
 }
 .divisionFormat{
   padding-left: 20px;
@@ -41,4 +42,10 @@ body {
 .dropDown{
   padding-top: 15px;
   width: 300px;
+}
+.whiteLine {
+  display: block;
+  color: white;
+  width:85%;
+  padding-left: 20px;
 }
