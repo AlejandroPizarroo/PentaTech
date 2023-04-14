@@ -1,39 +1,38 @@
 .barraLateral {
-  flex: 1;
+  flex: 2;
   background-color: #161616;
 }
 .searchRow{
   padding-top: 15px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
 }
 .align-right {
   margin-left: auto;
 }
 .left {
-  flex: 3;
+  flex: 4;
   background-color: white;
 }
 .container {
   display: flex;
-  height: 100vh;
-  width:96.7vw;
- // width:100vw;
+  height:100vh;
+  width:100vw;
 }
 body {
-  //overflow-x: hidden;
+  overflow-x: hidden;
 }
 .searchBarDiv{
   height:200px;
-  width: 200px;
+  width: 250px;
+  padding-left: 20px;
 }
 .searchButtonDiv{
   height: 200px;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 .divisionFormat{
-  padding-left: 34px;
+  padding-left: 20px;
   padding-top: 45px;
   color:white;
   font-family: 'IBM Plex Sans', sans-serif;
