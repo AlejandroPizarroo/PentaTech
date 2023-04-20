@@ -1,5 +1,13 @@
 import React from 'react';
-import {Header, HeaderName, HeaderGlobalBar, OverflowMenu, OverflowMenuItem, Theme} from '@carbon/react';
+import {
+    Header,
+    HeaderName,
+    HeaderGlobalBar,
+    OverflowMenu,
+    OverflowMenuItem,
+    Theme,
+    ExpandableSearch
+} from '@carbon/react';
 import {User} from '@carbon/react/icons';
 import {Content} from '@carbon/react';
 import {Link} from 'react-router-dom';
@@ -12,6 +20,13 @@ const DashboardPage = () => (
                     Certifications Dashboard
                 </HeaderName>
                 <HeaderGlobalBar>
+                    <ExpandableSearch
+                        size="lg"
+                        placeholder="Search by Uid"
+                        id="search-explandable-1"
+                        onChange={() => {}}
+                        onKeyDown={() => {}}
+                    />
                     <OverflowMenu
                         aria-label="User"
                         flipped="true"
