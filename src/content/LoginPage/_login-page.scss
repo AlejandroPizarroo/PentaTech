@@ -1,0 +1,13 @@
+@use '@carbon/colors';
+@use '@carbon/themes/scss/themes';
+
+.login-background {
+  height: 100vh;
+  background: url("loginPageImage.jpg") no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.upper-break {
+  height: 35vh;
+}
