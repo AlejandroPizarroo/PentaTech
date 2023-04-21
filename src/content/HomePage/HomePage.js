@@ -1,5 +1,5 @@
 import React from 'react';
-import {Header, HeaderName, HeaderGlobalBar, OverflowMenu, OverflowMenuItem, ExpandableSearch} from '@carbon/react';
+import {Header, HeaderName, HeaderGlobalBar, OverflowMenu, OverflowMenuItem} from '@carbon/react';
 import {User} from '@carbon/react/icons';
 import {Content, Button} from '@carbon/react';
 import {Link} from 'react-router-dom';

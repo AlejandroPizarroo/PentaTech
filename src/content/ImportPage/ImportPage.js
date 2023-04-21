@@ -4,7 +4,7 @@ import {User} from '@carbon/react/icons';
 import {Content} from '@carbon/react';
 import {Link} from 'react-router-dom';
 
-const DashboardPage = () => (
+const ImportPage = () => (
     <>
         <Theme theme="g100">
             <Header aria-label="IBM Platform Name">
@@ -36,9 +36,9 @@ const DashboardPage = () => (
             </Header>
         </Theme>
         <Content>
-            Dashboard page
+            Import page
         </Content>
     </>
 )
 
-export default DashboardPage;
+export default ImportPage;
