@@ -1,0 +1,65 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+
+.landing-page__heading {
+  position:relative;
+  left:40px;
+  margin-bottom: $spacing-05;
+}
+
+.landing-page__subheading {
+  @include type-style('productive-heading-03');
+
+  font-weight: 600;
+  margin-bottom: $spacing-08;
+  margin-top: $spacing-08;
+  position:relative;
+  left:40px;
+}
+
+.landing-page__p {
+  position:relative;
+  left:40px;
+  padding-right: 900px;
+  font-size: 20px;
+}
+
+.landing-page__p1 {
+  position:relative;
+  left:100px;
+  top: -360px;
+  padding-right: 150px;
+}
+
+.landing-page__img {
+  position: relative;
+  top: -170px;
+  margin-left: auto;
+  display: block;
+  padding-right: 70px;
+  width: 700px;
+  height: 450px;
+}
+
+.loginbutton {
+  position:relative;
+  left:40px;
+  top:-400px;
+}
+
+.landing-page__subheadingFunc {
+  @include type-style('productive-heading-03');
+
+  font-weight: 600;
+  margin-bottom: $spacing-08;
+  margin-top: $spacing-06;
+  position:relative;
+  left:100px;
+  top: -350px;
+}
+
+#func1{
+  left:40px;
+}
