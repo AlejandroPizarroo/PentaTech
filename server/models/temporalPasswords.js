@@ -8,6 +8,7 @@ const temporalPasswordsSchema = new Schema(
         email: {
             type: String,
             required: true,
+            unique: true,
             validate: {
                 validator: function (v) {
                     return emailRegex.test(v);

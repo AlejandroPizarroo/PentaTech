@@ -49,7 +49,7 @@ router.post("/register", async (req, res) => {
 // @route GET    PATCH /api/auth/verifyEmail
 // @description  temporal storage of temporal password
 // @access       Public
-router.patch("/verifyEmail", async(req, res) => {
+router.post("/verifyEmail", async(req, res) => {
    try{
       const tempPassword = generateTemporalPassword(10)
       const newPassword = new temporalPassword({

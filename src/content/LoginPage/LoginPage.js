@@ -4,7 +4,7 @@ import {Grid, Column, TextInput, Button} from '@carbon/react';
 import {Link} from 'react-router-dom';
 import {ArrowRight} from '@carbon/react/icons';
 
-const formData = new URLSearchParams();
+var formData = new URLSearchParams();
 ////const emailRegex = /^[\w.%+-]+@ibm\.com$/i;
 const emailRegex = /^[\w.%+-]+@tec\.mx$/i;
 const HomePage = () => {
@@ -22,7 +22,7 @@ const HomePage = () => {
 
     const handleButtonClick = () => {
         const requestOptions = {
-            method: 'PATCH',
+            method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: formData
         };
@@ -36,6 +36,7 @@ const HomePage = () => {
                 console.error(error);
                 setErrorMessage("Se ingreso un email inválido");
             });
+        formData = new URLSearchParams();
     };
 
 
