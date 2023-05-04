@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const generateEmail = require("../emailSender");
 const temporalPassword = require("../models/temporalPasswords");
 const generateTemporalPassword = require("../temporalPassword");
-const saltLength = 10;
+const saltLength = 5;
 
 // @route        GET /api/auth/test
 // @description  Test the auth route
@@ -51,7 +51,7 @@ router.post("/register", async (req, res) => {
 // @access       Public
 router.post("/verifyEmail", async(req, res) => {
    try{
-      const tempPassword = generateTemporalPassword(10)
+      const tempPassword = generateTemporalPassword(saltLength)
       const newPassword = new temporalPassword({
          email: req.body.email,
          password: tempPassword
