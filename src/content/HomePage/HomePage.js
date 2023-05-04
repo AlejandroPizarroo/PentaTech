@@ -3,6 +3,7 @@ import {Header, HeaderName, HeaderGlobalBar, OverflowMenu, OverflowMenuItem} fro
 import {User} from '@carbon/react/icons';
 import {Content, Button} from '@carbon/react';
 import {Link} from 'react-router-dom';
+import ibmCertificationImg from './ibm-certification-logo.png';
 
 const HomePage = () => (
     <>
@@ -30,8 +31,8 @@ const HomePage = () => (
             </p>
             <img
                 className="landing-page__img"
-                src="https://letraslibres.com/wp-content/uploads/2016/05/eltuca.jpg"
-                alt="El Tuca"
+                src={ibmCertificationImg}
+                alt="IBM Certification logo"
             />
             <Link to="/login">
                 <Button className="loginbutton">Log in page</Button>
