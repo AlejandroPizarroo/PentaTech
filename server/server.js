@@ -6,22 +6,28 @@ const cors = require('cors');
 
 // se importan las rutas
 const authRoute = require("./routes/auth");
+const certificationRoutes = require("./routes/certification")
 
 const app = express();
+const port = process.env.PORT;
+
+//conect to databse
+mongoose.connect(process.env.MONGO_URI)
+.then(()=> console.log("Connected to database"))
+.catch((error) =>console.error(error))
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoute);
+app.use("/api/ibm", certificationRoutes)
 
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("Conectado a la base de datos");
-        app.listen(process.env.PORT, () => {
-            console.log(`Server running on port ${process.env.PORT}`);
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+
+//routes 
+app.get("/", (req, res) => {
+    res.send("Hello from the server side!")
+});
+
+app.listen(port, () => console.log("server listening on port", port));
