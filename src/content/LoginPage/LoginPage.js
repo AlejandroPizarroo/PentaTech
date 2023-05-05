@@ -18,6 +18,10 @@ const HomePage = () => {
             formData.append('email', event.target.value) ;
             setPageDir("/dashboard");
         }
+        else {
+            formData = new URLSearchParams();
+            setPageDir("/login");
+        }
     };
 
     const handleButtonClick = () => {
