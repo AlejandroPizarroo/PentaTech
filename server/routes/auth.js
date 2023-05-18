@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const generateEmail = require("../emailSender");
 const temporalPassword = require("../models/temporalPasswords");
 const generateTemporalPassword = require("../temporalPassword");
-const saltLength = 10;
+const saltLength = 5;
 
 // @route        GET /api/auth/test
 // @description  Test the auth route
@@ -39,7 +39,7 @@ router.post("/register", async (req, res) => {
          console.log(`Could not complete registration, the account with the email: ${err.keyValue.email} already exists`);
          res.status(500).send(err.message);
       }
-      else{
+      else {
          console.log(err.message);
          res.status(500).send(err.message);
       }
@@ -50,8 +50,8 @@ router.post("/register", async (req, res) => {
 // @description  temporal storage of temporal password
 // @access       Public
 router.post("/verifyEmail", async(req, res) => {
-   try{
-      const tempPassword = generateTemporalPassword(10)
+   try {
+      const tempPassword = generateTemporalPassword(saltLength)
       const newPassword = new temporalPassword({
          email: req.body.email,
          password: tempPassword
@@ -59,6 +59,38 @@ router.post("/verifyEmail", async(req, res) => {
       const savedTemporalPassword = await newPassword.save();
       generateEmail(req.body.email.toString(), tempPassword);
       return res.json(savedTemporalPassword);
+   } catch(err) {
+      res.status(500).send(err.message);
+   }
+});
+
+router.get("/verifyTemporalPassword", async(req, res) => {
+   try {
+      const result = await temporalPassword.findOne({ password: req.body.password })
+      if(result.password == req.body.password) {
+         res.send("passwords match");
+      }
+   } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+   }
+});
+
+router.patch("/resendTemporalPassword", async(req, res) => {
+   try {
+      const tempPassword = generateTemporalPassword(saltLength)
+      const updatedTemporalPassword = await temporalPassword.findOneAndUpdate(
+          { email: req.body.email },
+          { password: tempPassword },
+          { new: true }
+      );
+
+      // Check if the record was found and updated
+      if (!updatedTemporalPassword) {
+         return res.status(404).send("Account not found");
+      }
+      generateEmail(req.body.email.toString(), tempPassword);
+      return res.json(updatedTemporalPassword);
    } catch(err) {
       res.status(500).send(err.message);
    }

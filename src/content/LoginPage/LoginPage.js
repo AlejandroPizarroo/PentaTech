@@ -8,7 +8,7 @@ var formData = new URLSearchParams();
 ////const emailRegex = /^[\w.%+-]+@ibm\.com$/i;
 const emailRegex = /^[\w.%+-]+@tec\.mx$/i;
 const HomePage = () => {
-    const [errorMessage, setErrorMessage] = useState('IBMid');
+    const [errorMessage, setErrorMessage] = useState("\u00A0\u00A0IBMid");
     const [inputValue, setInputValue] = useState('');
     const[pageDir, setPageDir] = useState('/login');
 
@@ -17,6 +17,10 @@ const HomePage = () => {
         if (emailRegex.test(event.target.value)) {
             formData.append('email', event.target.value) ;
             setPageDir("/dashboard");
+        }
+        else {
+            formData = new URLSearchParams();
+            setPageDir("/login");
         }
     };
 
@@ -34,7 +38,7 @@ const HomePage = () => {
             })
             .catch(error => {
                 console.error(error);
-                setErrorMessage("Se ingreso un email inválido");
+                setErrorMessage("\u00A0\u00A0Se ingreso un email inválido");
             });
         formData = new URLSearchParams();
     };
@@ -55,11 +59,11 @@ const HomePage = () => {
             <Grid fullWidth condensed>
                 <Column lg={{span: 8, offset: 4}} md={{span: 4, offset: 2}} sm={{span: 2, offset: 1}}>
                     <Theme theme="g100">
-                        <h3>Log in to the IBM Certifications Dashboard</h3>
+                        <h3>&nbsp;Log in to the IBM Certifications Dashboard</h3>
                         <TextInput
                             id="text-input-1"
                             type="email"
-                            labelText={errorMessage || "IBMid"}
+                            labelText={errorMessage || "\u00A0\u00A0IBMid"}
                             value={inputValue}
                             onChange={handleInputChange}
                             placeholder="username@ibm.com"

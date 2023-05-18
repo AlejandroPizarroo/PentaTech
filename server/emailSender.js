@@ -7,7 +7,7 @@ function sendEmail(email, password){
         to: email,
         from: 'hecrafalac@hotmail.com',
         subject: 'Temporal password request',
-        text: `You requested to signin in IBM Certifications Dashboard, here is your temporal password: ${password}`
+        text: `You requested to sign in to the IBM Certifications Dashboard, here is your temporal password: ${password}`
     };
     sgMail.send(msg)
         .then(() => {
