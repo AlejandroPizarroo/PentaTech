@@ -93,5 +93,34 @@ certificationSchema.aggregate([
     res.status(500).send('Error retrieving how many times a parameter repeats');
     });
 });
+
+// get all certifications from specific uid
+router.get("/certifications/uid/:uid", (req,res) => {
+    const { uid } = req.params
+    certificationSchema
+    .find()
+    .where('uid')
+    .all([uid])
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ message: error}))
+})
+
+// get all certifications from specific uid
+router.get("/certifications/uidv2/:uid", (req, res) => {
+    const { uid } = req.params;
+    certificationSchema
+      .find({ uid }, 'certification')                      //add or remove parameters of the response
+      .then((data) => {
+        if (data.length === 0) {
+          res.json({ message: "Invalid uid" });
+        } else {
+          res.json(data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send('Error retrieving certifications by uid');
+        });
+  });
   
 module.exports = router;
