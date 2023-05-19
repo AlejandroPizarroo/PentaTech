@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const generateEmail = require("../emailSender");
 const temporalPassword = require("../models/temporalPasswords");
 const generateTemporalPassword = require("../temporalPassword");
-const saltLength = 5;
+const saltLength = 3;
 
 // @route        GET /api/auth/test
 // @description  Test the auth route
