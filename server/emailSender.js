@@ -1,5 +1,6 @@
+require("dotenv").config();
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('');
+sgMail.setApiKey(process.env.SENDGRID_APIKEY);
 
 
 function sendEmail(email, password){
