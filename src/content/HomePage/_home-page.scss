@@ -6,12 +6,11 @@
 .landing-page__heading {
   position:relative;
   left:40px;
-  margin-bottom: $spacing-05;
+  margin-bottom: $spacing-08;
 }
 
 .landing-page__subheading {
   @include type-style('productive-heading-03');
-
   font-weight: 600;
   margin-bottom: $spacing-08;
   margin-top: $spacing-08;
@@ -39,7 +38,7 @@
   margin-left: auto;
   display: block;
   padding-right: 70px;
-  width: 700px;
+  width: 800px;
   height: 450px;
 }
 
@@ -51,9 +50,8 @@
 
 .landing-page__subheadingFunc {
   @include type-style('productive-heading-03');
-
   font-weight: 600;
-  margin-bottom: $spacing-08;
+  margin-bottom: $spacing-06;
   margin-top: $spacing-06;
   position:relative;
   left:100px;
