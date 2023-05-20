@@ -5,7 +5,7 @@ const cors = require('cors');
 
 
 // se importan las rutas
-const authRoute = require("./routes/auth");
+const loginRoute = require("./routes/login");
 const certificationRoutes = require("./routes/certification")
 
 const app = express();
@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/auth", authRoute);
+app.use("/api/login", loginRoute);
 app.use("/api/ibm", certificationRoutes)
 
 

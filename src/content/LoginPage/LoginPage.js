@@ -8,49 +8,59 @@ var formData = new URLSearchParams();
 const emailRegex = /^[\w.%+-]+@tec\.mx$/i;
 
 const HomePage = () => {
+    const saveTemporalPasswordRequestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData
+    };
+
+    const verifyPasswordRequestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData
+    }
     const [errorMessage, setErrorMessage] = useState('');
-    const [inputValue, setInputValue] = useState('');
     const [pageDir, setPageDir] = useState('/login');
     const [twoFACode, setTwoFACode] = useState('');
     const [twoFAErrorMessage, setTwoFAErrorMessage] = useState('');
     const [isRequestingTwoFA, setIsRequestingTwoFA] = useState(false);
+    const [isValidEmail, setIsValidEmail]  = useState(false);
 
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-        const isValidEmail = emailRegex.test(event.target.value);
-        setErrorMessage(isValidEmail ? '' : 'Correo electrónico inválido');
-        if (isValidEmail) {
+    const handleLoginButtonClick = () => {
+        if(pageDir === "/login") {
+            setTwoFAErrorMessage("Invalid 2FA code");
+        }
+    };
+
+    const handleEmailInputChange = (event) => {
+        if (emailRegex.test(event.target.value)) {
             formData.append('email', event.target.value);
-            setPageDir('/dashboard');
+            setIsValidEmail(true);
         } else {
             formData = new URLSearchParams();
             setPageDir('/login');
+            setIsValidEmail(false);
         }
     };
 
     const handleTwoFACodeChange = (event) => {
-        const { value } = event.target;
-        setTwoFACode(value);
-        if (value.length === 0 || (value.length === 6 && /^\d+$/.test(value))) {
+        setTwoFACode(event.target.value);
+        if (event.target.value.length === 0 || (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value))) {
             setTwoFAErrorMessage('');
+            if (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value)){
+
+                formData.append('password', event.target.value);
+                handleLogin();
+            }
         } else {
-            setTwoFAErrorMessage('El código 2FA debe ser de 6 dígitos');
+            setPageDir("/login");
+            formData = new URLSearchParams();
         }
     };
 
     const handleRequestTwoFA = () => {
-        setIsRequestingTwoFA(true);
-    };
-
-    const handleButtonClick = () => {
-        if (twoFACode.length === 6 && /^\d+$/.test(twoFACode)) {
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
-            };
-
-            fetch('http://localhost:5000/api/auth/verifyEmail', requestOptions)
+        if(isValidEmail){
+            fetch('http://localhost:5000/api/login/saveTemporalPassword', saveTemporalPasswordRequestOptions)
                 .then(response => response.json())
                 .then(_ => {
                     setErrorMessage('');
@@ -58,12 +68,29 @@ const HomePage = () => {
                 })
                 .catch(error => {
                     console.error(error);
-                    setErrorMessage('Se ingresó un correo electrónico inválido');
+                    setErrorMessage('Invalid email');
                 });
             formData = new URLSearchParams();
-        } else {
-            setTwoFAErrorMessage('El código 2FA debe ser de 6 dígitos');
+            setIsRequestingTwoFA(true);
         }
+        setErrorMessage(isValidEmail ? '' : 'Invalid email');
+    };
+
+    const handleLogin = () => {
+        fetch('http://localhost:5000/api/login/verifyTemporalPassword',  verifyPasswordRequestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    setErrorMessage('');
+                    setTwoFAErrorMessage('');
+                    setPageDir("/dashboard")
+                }
+            })
+            .catch(error => {
+                console.error('Error', error);
+                setErrorMessage("Internal server error");
+            });
+        formData = new URLSearchParams();
     };
 
     return (
@@ -85,46 +112,40 @@ const HomePage = () => {
                         sm={{ span: 2, offset: 1 }}
                     >
                         <Theme theme="g100">
-                            <h3>&nbsp;Log in to the IBM Certifications Dashboard</h3>
+                            <h3>&nbsp;Login to the IBM Certifications Dashboard</h3>
                             <TextInput
                                 id="text-input-1"
                                 type="email"
                                 labelText={<>&nbsp;&nbsp;IBMid</>}
-                                value={inputValue}
-                                onChange={handleInputChange}
+                                onChange={handleEmailInputChange}
                                 placeholder="username@ibm.com"
                                 invalid={errorMessage !== ''}
                                 invalidText={errorMessage}
                             />
-                            {pageDir === '/dashboard' && (
+                            {isRequestingTwoFA ? (
                                 <>
-                                    {isRequestingTwoFA ? (
-                                        <>
-                                            <Button enabled>
-                                                Request 2FA Code
-                                            </Button>
-                                            <div>&nbsp;</div>
-                                            <TextInput
-                                                id="text-input-2fa"
-                                                type="password"
-                                                labelText={<>&nbsp;&nbsp;2FA Code</>}
-                                                value={twoFACode}
-                                                onChange={handleTwoFACodeChange}
-                                                invalid={twoFAErrorMessage !== ''}
-                                                invalidText={twoFAErrorMessage}
-                                                maxLength={6}
-                                            />
-                                        </>
-                                    ) : (
-                                        <Button onClick={handleRequestTwoFA}>
-                                            Request 2FA Code
-                                        </Button>
-                                    )}
+                                    <Button enabled>
+                                        Request 2FA Code
+                                    </Button>
+                                    <div>&nbsp;</div>
+                                    <TextInput
+                                        id="text-input-2fa"
+                                        type="password"
+                                        labelText={<>&nbsp;&nbsp;2FA Code</>}
+                                        onChange={handleTwoFACodeChange}
+                                        invalid={twoFAErrorMessage !== ''}
+                                        invalidText={twoFAErrorMessage}
+                                        maxLength={6}
+                                    />
                                 </>
+                            ) : (
+                                <Button onClick={handleRequestTwoFA}>
+                                    Request 2FA Code
+                                </Button>
                             )}
                             <Link to={pageDir}>
-                                <Button renderIcon={ArrowRight} onClick={handleButtonClick} disabled={twoFACode.length !== 6}>
-                                    Log in
+                                <Button onClick={handleLoginButtonClick} renderIcon={ArrowRight} disabled={twoFACode.length !== 6}>
+                                    Login
                                 </Button>
                             </Link>
                         </Theme>
