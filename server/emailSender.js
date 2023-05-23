@@ -1,5 +1,6 @@
+require("dotenv").config();
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('');
+sgMail.setApiKey(process.env.SENDGRID_APIKEY);
 
 
 function sendEmail(email, password){
@@ -7,7 +8,7 @@ function sendEmail(email, password){
         to: email,
         from: 'hecrafalac@hotmail.com',
         subject: 'Temporal password request',
-        text: `You requested to sign in to the IBM Certifications Dashboard, here is your temporal password: ${password}`
+        text: `You requested to login to the IBM Certifications Dashboard, here is your 2FA code: ${password}`
     };
     sgMail.send(msg)
         .then(() => {
