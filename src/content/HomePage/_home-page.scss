@@ -1,63 +1,64 @@
 @use '@carbon/react/scss/spacing' as *;
-@use '@carbon/react/scss/type' as *;
 @use '@carbon/react/scss/breakpoint' as *;
 @use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
 
-.landing-page__heading {
-  position:relative;
-  left:40px;
-  margin-bottom: $spacing-08;
+
+.overflow-menu-item {
+  text-decoration: none;
+  font-size: medium;
 }
-
-.landing-page__subheading {
-  @include type-style('productive-heading-03');
-  font-weight: 600;
-  margin-bottom: $spacing-08;
-  margin-top: $spacing-08;
-  position:relative;
-  left:40px;
-}
-
-.landing-page__p {
-  position:relative;
-  left:40px;
-  padding-right: 900px;
-  font-size: 20px;
-}
-
-.landing-page__p1 {
-  position:relative;
-  left:100px;
-  top: -360px;
-  padding-right: 150px;
-}
-
-.landing-page__img {
+.banner {
+  background-color: #eef1f6;
   position: relative;
-  top: -170px;
-  margin-left: auto;
-  display: block;
-  padding-right: 70px;
-  width: 800px;
-  height: 450px;
 }
 
-.loginbutton {
-  position:relative;
-  left:40px;
-  top:-400px;
+.header {
+  padding-top: $spacing-06;
+  padding-right: $spacing-06;
+  padding-bottom: $spacing-06;
 }
 
-.landing-page__subheadingFunc {
-  @include type-style('productive-heading-03');
-  font-weight: 600;
-  margin-bottom: $spacing-06;
-  margin-top: $spacing-06;
-  position:relative;
-  left:100px;
-  top: -350px;
+.header-body {
+  padding-bottom: $spacing-06;
+  @include breakpoint(md) {
+    padding-top: 10vw;
+  }
+  @include breakpoint(sm) {
+    padding-top: $spacing-06;
+  }
 }
 
-#func1{
-  left:40px;
+.home-image {
+  margin-left: -1rem;
+  height: 100%;
+  @include breakpoint(md) {
+    width: 50vw;
+  }
+  @include breakpoint(sm) {
+    width: 100vw;
+  }
+  object-fit: cover;
+}
+
+.info {
+  background-color: $layer-01;
+  position: relative;
+  padding-top: $spacing-06;
+  padding-bottom: $spacing-06;
+}
+
+.info-title {
+  padding-bottom: $spacing-06;
+}
+
+.info-columnn {
+  border-left: 1px solid $border-subtle-01;
+  padding-left: $spacing-06;
+  padding-bottom: $spacing-06;
+}
+
+.info-body {
+  padding-top: $spacing-06;
+  padding-bottom: $spacing-06;
 }

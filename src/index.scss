@@ -1,12 +1,15 @@
+// Make content adaptive to window size
 @use '@carbon/react';
 @use '@carbon/react/scss/breakpoint' as *;
 
+// Set content height to window size (excluding header)
 .cds--content {
   margin-top: 3rem;
   padding: 0;
   background: var(--cds-background);
 }
 
+// Set content and grid width to window size (excluding header)
 .cds--content .cds--css-grid {
   max-width: 100%;
   @include breakpoint(md) {
