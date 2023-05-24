@@ -3,30 +3,32 @@
 @use '@carbon/react/scss/theme' as *;
 @use '@carbon/react/scss/type' as *;
 
+.overflow-menu-link {
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+}
 
 .overflow-menu-item {
-  text-decoration: none;
   font-size: medium;
 }
 .banner {
   background-color: #eef1f6;
-  position: relative;
 }
 
 .header {
   padding-top: $spacing-06;
   padding-right: $spacing-06;
   padding-bottom: $spacing-06;
+  display: flex;
+  flex-direction: column;
 }
 
 .header-body {
+  padding-top: $spacing-06;
   padding-bottom: $spacing-06;
-  @include breakpoint(md) {
-    padding-top: 10vw;
-  }
-  @include breakpoint(sm) {
-    padding-top: $spacing-06;
-  }
+  bottom: 0;
+  margin-top: auto;
 }
 
 .home-image {

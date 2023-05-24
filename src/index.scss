@@ -9,7 +9,7 @@
   background: var(--cds-background);
 }
 
-// Set content and grid width to window size (excluding header)
+// Set content and grid width to window size
 .cds--content .cds--css-grid {
   max-width: 100%;
   @include breakpoint(md) {

@@ -1,87 +1,170 @@
 @use '@carbon/colors';
-@use '@carbon/themes/scss/themes';
+//@use '@carbon/themes/scss/themes';
 @use '@carbon/react/scss/spacing' as *;
-@use '@carbon/react/scss/type' as *;
+//@use '@carbon/react/scss/type' as *;
 @use '@carbon/react/scss/breakpoint' as *;
-@use '@carbon/react/scss/theme' as *;
+//@use '@carbon/react/scss/theme' as *;
 //@use './mixins.scss' as *;
 //@use './overrides.scss';
 
 .login-background {
-  height: 100vh;
+  height: calc(100vh - 3rem);
+  width: 100vw;
   background: url("loginPageImage.jpg") no-repeat center center fixed;
   background-size: cover;
-  overflow: hidden;
+  display: flex;
 }
 
-.upper-break {
-  height: 35vh;
+.content-div {
+  @include breakpoint(md) {
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+  }
+  @include breakpoint(sm) {
+    background-color: colors.$gray-100;
+    height: calc(100vh - 3rem);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.landing-page__illo {
-  max-width: 100%;
-  margin: 0;
+.header-padding {
+    padding-top: $spacing-07;
+    padding-right: $spacing-06;
+    padding-left: $spacing-06;
+    padding-bottom: $spacing-08;;
 }
 
-.landing-page__banner {
-  padding-top: $spacing-05;
-  padding-bottom: $spacing-07 * 4;
+.email-input {
+  padding-right: $spacing-06;
   padding-left: $spacing-06;
-  //@include landing-page-background;
 }
 
-.landing-page__heading {
-  @include type-style('productive-heading-05');
+.password-input {
+  padding-right: $spacing-06;
+  padding-left: $spacing-06;
 }
 
-.landing-page__r2 {
-  margin-top: rem(-40px);
-}
-
-.tabs-group-content {
-  padding: $spacing-10 $spacing-06;
-}
-
-.landing-page__subheading {
-  @include type-style('productive-heading-03');
-
-  font-weight: 600;
-}
-
-.landing-page__p {
-  @include type-style('productive-heading-03');
+.continue-button {
+  //margin-left: 50%;
   margin-top: $spacing-06;
-  margin-bottom: $spacing-08;
-
-  @include breakpoint-between((320px + 1), md) {
-    max-width: 75%;
+  @include breakpoint(md) {
+    margin-left: 50%;
+    width: 50%;
+  }
+  @include breakpoint(sm) {
+    margin-left: 50%;
+    width: calc(50% - $spacing-06);
   }
 }
 
-.tabs-group {
-  background-color: $layer-01;
+.log-in-link {
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
 }
 
-.landing-page__r3 {
-  padding-top: $spacing-09;
-  padding-bottom: $spacing-09;
-  padding-left: $spacing-06;
-  //@include landing-page-background;
-}
-
-.landing-page__label {
-  @include type-style('heading-01');
-}
-
-.landing-page__banner,
-.landing-page__r2,
-.landing-page__r3 {
-  margin-left: -20px;
-  margin-right: -20px;
-
-  @include breakpoint-down(md) {
-    margin-left: 0;
+.log-in-button {
+  display: none;
+  margin-top: $spacing-06;
+  @include breakpoint(md) {
     margin-right: 0;
+    width: 50%;
+  }
+  @include breakpoint(sm) {
+    margin-right: $spacing-06;
+    width: calc(50% - $spacing-06);
   }
 }
 
+.resend-button {
+  display: none;
+  margin-top: $spacing-06;
+  @include breakpoint(md) {
+    margin-left: 0;
+    width: 50%;
+  }
+  @include breakpoint(sm) {
+    margin-left: $spacing-06;
+    width: calc(50% - $spacing-06);
+  }
+  //@include breakpoint(sm) {
+  //  margin-left: $spacing-06;
+  //}
+}
+
+//
+//.upper-break {
+//  height: 35vh;
+//}
+//
+//.landing-page__illo {
+//  max-width: 100%;
+//  margin: 0;
+//}
+//
+//.landing-page__banner {
+//  padding-top: $spacing-05;
+//  padding-bottom: $spacing-07 * 4;
+//  padding-left: $spacing-06;
+//  //@include landing-page-background;
+//}
+//
+//.landing-page__heading {
+//  @include type-style('productive-heading-05');
+//}
+//
+//.landing-page__r2 {
+//  margin-top: rem(-40px);
+//}
+//
+//.tabs-group-content {
+//  padding: $spacing-10 $spacing-06;
+//}
+//
+//.landing-page__subheading {
+//  @include type-style('productive-heading-03');
+//
+//  font-weight: 600;
+//}
+//
+//.landing-page__p {
+//  @include type-style('productive-heading-03');
+//  margin-top: $spacing-06;
+//  margin-bottom: $spacing-08;
+//
+//  @include breakpoint-between((320px + 1), md) {
+//    max-width: 75%;
+//  }
+//}
+//
+//.tabs-group {
+//  background-color: $layer-01;
+//}
+//
+//.landing-page__r3 {
+//  padding-top: $spacing-09;
+//  padding-bottom: $spacing-09;
+//  padding-left: $spacing-06;
+//  //@include landing-page-background;
+//}
+//
+//.landing-page__label {
+//  @include type-style('heading-01');
+//}
+//
+//.landing-page__banner,
+//.landing-page__r2,
+//.landing-page__r3 {
+//  margin-left: -20px;
+//  margin-right: -20px;
+//
+//  @include breakpoint-down(md) {
+//    margin-left: 0;
+//    margin-right: 0;
+//  }
+//}
+//
