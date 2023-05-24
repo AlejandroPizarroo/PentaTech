@@ -22,10 +22,11 @@ const LoginPage = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [pageDir, setPageDir] = useState('/login');
-    const [twoFACode, setTwoFACode] = useState('');
     const [twoFAErrorMessage, setTwoFAErrorMessage] = useState('');
-    const [otpContinue, setOtpContinue] = useState(true);
+    let [otpContinue, setOtpContinue] = useState(true);
     const [isValidEmail, setIsValidEmail]  = useState(false);
+    // PEDIRLE AYUDA A HECTOR
+    const [userEmail, setUserEmail] = useState('');
 
     const handleLoginButtonClick = () => {
         if(pageDir === "/login") {
@@ -36,6 +37,7 @@ const LoginPage = () => {
     const handleEmailInputChange = (event) => {
         if (emailRegex.test(event.target.value)) {
             formData.append('email', event.target.value);
+            setUserEmail(event.target.value);
             setIsValidEmail(true);
         } else {
             formData = new URLSearchParams();
@@ -45,8 +47,6 @@ const LoginPage = () => {
     };
 
     const handleTwoFACodeChange = (event) => {
-        setTwoFACode(event.target.value);
-        // console.log(event.target.value);
         if (event.target.value.length === 0 || (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value))) {
             setTwoFAErrorMessage('');
             if (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value)){
@@ -126,6 +126,12 @@ const LoginPage = () => {
                             </>
                         ) : (
                             <>
+                                <p className="log-in-message">
+                                    Logging in as {userEmail}&nbsp;
+                                    <Button className="function-text" onClick={() => setOtpContinue(true)}>
+                                        Not you?
+                                    </Button>
+                                </p>
                                 <div className="password-input">
                                     <TextInput.PasswordInput
                                         id="password-input"

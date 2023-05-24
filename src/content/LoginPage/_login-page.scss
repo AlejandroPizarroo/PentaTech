@@ -1,11 +1,6 @@
 @use '@carbon/colors';
-//@use '@carbon/themes/scss/themes';
 @use '@carbon/react/scss/spacing' as *;
-//@use '@carbon/react/scss/type' as *;
 @use '@carbon/react/scss/breakpoint' as *;
-//@use '@carbon/react/scss/theme' as *;
-//@use './mixins.scss' as *;
-//@use './overrides.scss';
 
 .login-background {
   height: calc(100vh - 3rem);
@@ -35,15 +30,10 @@
     padding-top: $spacing-07;
     padding-right: $spacing-06;
     padding-left: $spacing-06;
-    padding-bottom: $spacing-08;;
 }
 
 .email-input {
-  padding-right: $spacing-06;
-  padding-left: $spacing-06;
-}
-
-.password-input {
+  padding-top: $spacing-08;
   padding-right: $spacing-06;
   padding-left: $spacing-06;
 }
@@ -60,10 +50,43 @@
   }
 }
 
+.log-in-message {
+  padding-left: $spacing-06;
+}
+
+.function-text {
+  all: unset;
+  color: colors.$blue-50;
+}
+
+.function-text:hover {
+  all: unset;
+  text-decoration: underline;
+  color: colors.$blue-50;
+}
+
+.password-input {
+  padding-top: $spacing-07;
+  padding-right: $spacing-06;
+  padding-left: $spacing-06;
+}
+
 .log-in-link {
   text-decoration: none;
   height: 100%;
   width: 100%;
+}
+
+.resend-button {
+  margin-top: $spacing-06;
+  @include breakpoint(md) {
+    margin-left: 0;
+    width: 50%;
+  }
+  @include breakpoint(sm) {
+    margin-left: $spacing-06;
+    width: calc(50% - $spacing-06);
+  }
 }
 
 .log-in-button {
@@ -77,91 +100,3 @@
     width: calc(50% - $spacing-06);
   }
 }
-
-.resend-button {
-  margin-top: $spacing-06;
-  @include breakpoint(md) {
-    margin-left: 0;
-    width: 50%;
-  }
-  @include breakpoint(sm) {
-    margin-left: $spacing-06;
-    width: calc(50% - $spacing-06);
-  }
-  //@include breakpoint(sm) {
-  //  margin-left: $spacing-06;
-  //}
-}
-
-//
-//.upper-break {
-//  height: 35vh;
-//}
-//
-//.landing-page__illo {
-//  max-width: 100%;
-//  margin: 0;
-//}
-//
-//.landing-page__banner {
-//  padding-top: $spacing-05;
-//  padding-bottom: $spacing-07 * 4;
-//  padding-left: $spacing-06;
-//  //@include landing-page-background;
-//}
-//
-//.landing-page__heading {
-//  @include type-style('productive-heading-05');
-//}
-//
-//.landing-page__r2 {
-//  margin-top: rem(-40px);
-//}
-//
-//.tabs-group-content {
-//  padding: $spacing-10 $spacing-06;
-//}
-//
-//.landing-page__subheading {
-//  @include type-style('productive-heading-03');
-//
-//  font-weight: 600;
-//}
-//
-//.landing-page__p {
-//  @include type-style('productive-heading-03');
-//  margin-top: $spacing-06;
-//  margin-bottom: $spacing-08;
-//
-//  @include breakpoint-between((320px + 1), md) {
-//    max-width: 75%;
-//  }
-//}
-//
-//.tabs-group {
-//  background-color: $layer-01;
-//}
-//
-//.landing-page__r3 {
-//  padding-top: $spacing-09;
-//  padding-bottom: $spacing-09;
-//  padding-left: $spacing-06;
-//  //@include landing-page-background;
-//}
-//
-//.landing-page__label {
-//  @include type-style('heading-01');
-//}
-//
-//.landing-page__banner,
-//.landing-page__r2,
-//.landing-page__r3 {
-//  margin-left: -20px;
-//  margin-right: -20px;
-//
-//  @include breakpoint-down(md) {
-//    margin-left: 0;
-//    margin-right: 0;
-//  }
-//}
-//
