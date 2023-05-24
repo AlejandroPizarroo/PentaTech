@@ -22,6 +22,7 @@ const LoginPage = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [pageDir, setPageDir] = useState('/login');
+    const [twoFACode, setTwoFACode] = useState('');
     const [twoFAErrorMessage, setTwoFAErrorMessage] = useState('');
     let [otpContinue, setOtpContinue] = useState(true);
     const [isValidEmail, setIsValidEmail]  = useState(false);
@@ -47,6 +48,7 @@ const LoginPage = () => {
     };
 
     const handleTwoFACodeChange = (event) => {
+        setTwoFACode(event.target.value);
         if (event.target.value.length === 0 || (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value))) {
             setTwoFAErrorMessage('');
             if (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value)){
@@ -74,6 +76,8 @@ const LoginPage = () => {
                 });
             formData = new URLSearchParams();
             setOtpContinue(false);
+            // var resendButton = document.getElementById("resend-button");
+            // resendButton.disabled = "true";
         }
         setErrorMessage(isValidEmail ? '' : 'Invalid IBM email address');
     };
@@ -138,7 +142,7 @@ const LoginPage = () => {
                                         type="password"
                                         labelText="One-Time Password"
                                         onChange={handleTwoFACodeChange}
-                                        placeholder="A six-digit OTP has been sent to your w3id email"
+                                        placeholder="A 6-character OTP has been sent to your w3id email"
                                         invalid={twoFAErrorMessage !== ''}
                                         invalidText={twoFAErrorMessage}
                                         maxLength={6}
