@@ -22,6 +22,7 @@ const LoginPage = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [pageDir, setPageDir] = useState('/login');
+    const [twoFACode, setTwoFACode] = useState('');
     const [twoFAErrorMessage, setTwoFAErrorMessage] = useState('');
     let [otpContinue, setOtpContinue] = useState(true);
     const [isValidEmail, setIsValidEmail]  = useState(false);
@@ -47,6 +48,7 @@ const LoginPage = () => {
     };
 
     const handleTwoFACodeChange = (event) => {
+        setTwoFACode(event.target.value);
         if (event.target.value.length === 0 || (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value))) {
             setTwoFAErrorMessage('');
             if (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value)){
