@@ -49,7 +49,6 @@
 }
 
 .continue-button {
-  //margin-left: 50%;
   margin-top: $spacing-06;
   @include breakpoint(md) {
     margin-left: 50%;
@@ -68,7 +67,6 @@
 }
 
 .log-in-button {
-  display: none;
   margin-top: $spacing-06;
   @include breakpoint(md) {
     margin-right: 0;
@@ -81,7 +79,6 @@
 }
 
 .resend-button {
-  display: none;
   margin-top: $spacing-06;
   @include breakpoint(md) {
     margin-left: 0;

@@ -7,8 +7,14 @@ function sendEmail(email, password){
     const msg = {
         to: email,
         from: 'hecrafalac@hotmail.com',
-        subject: 'Temporal password request',
-        text: `You requested to login to the IBM Certifications Dashboard, here is your 2FA code: ${password}`
+        subject: `${password}`,
+        text:
+    `Hi,
+    
+Please use the following One Time Password (OTP) to access the IBM Certifications Dashboard: ${password}. 
+Do not share this OTP with anyone. OTP is valid for 60 seconds.
+    
+Thank you!`
     };
     sgMail.send(msg)
         .then(() => {

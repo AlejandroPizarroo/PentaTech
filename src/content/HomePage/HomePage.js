@@ -6,7 +6,7 @@ import homeImage from './homePageImage.jpg';
 import {Link} from "react-router-dom";
 
 const HomePage = () => {
-    const [pageDir, setPageDir] = useState('/login');
+    const [pageDir] = useState('/login');
 
     return (
         <>
