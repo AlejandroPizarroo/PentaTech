@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom';
 
 var emailData = new URLSearchParams();
 var passwordPostData = new URLSearchParams();
-const emailRegex = /^[\w.%+-]+@tec\.mx$/i;
 
 const LoginPage = () => {
     const saveEmailRequestOptions = {
@@ -27,25 +26,12 @@ const LoginPage = () => {
    // const [twoFACode, setTwoFACode] = useState('');
     const [twoFAErrorMessage, setTwoFAErrorMessage] = useState('');
     let [otpContinue, setOtpContinue] = useState(false);
-    const [isValidEmail, setIsValidEmail]  = useState(false);
     // PEDIRLE AYUDA A HECTOR
     const [userEmail, setUserEmail] = useState('');
 
     const handleLoginButtonClick = () => {
         if(pageDir === "/login") {
             setTwoFAErrorMessage("Invalid One-Time Password");
-        }
-    };
-
-    const handleEmailInputChange = (event) => {
-        if (emailRegex.test(event.target.value)) {
-            //formData.append('email', event.target.value);
-            setUserEmail(event.target.value);
-            setIsValidEmail(true);
-        } else {
-           // formData = new URLSearchParams();
-            setPageDir('/login');
-            setIsValidEmail(false);
         }
     };
 
@@ -66,6 +52,7 @@ const LoginPage = () => {
 
     const handleContinue = () => {
          var emailInput = document.getElementById("email-input").value;
+        setUserEmail(emailInput);
         emailData.append('email', emailInput);
 
         fetch('http://localhost:5000/api/login/saveTemporalPassword', saveEmailRequestOptions)
