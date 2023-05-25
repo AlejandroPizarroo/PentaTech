@@ -22,6 +22,7 @@ const LoginPage = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [pageDir, setPageDir] = useState('/login');
+    // eslint-disable-next-line
     const [twoFACode, setTwoFACode] = useState('');
     const [twoFAErrorMessage, setTwoFAErrorMessage] = useState('');
     let [otpContinue, setOtpContinue] = useState(true);
