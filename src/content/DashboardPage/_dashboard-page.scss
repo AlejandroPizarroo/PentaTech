@@ -1,0 +1,28 @@
+.dashboard-container {
+  display: flex;
+  height: 50vh;
+}
+
+.chart-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3rem;
+}
+
+.canvas-container {
+  position: relative;
+  width: 50%; /* Ajusta el ancho según tus necesidades */
+  height: 100%; /* Ajusta la altura según tus necesidades */
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+// Ajusta los estilos según tus necesidades
