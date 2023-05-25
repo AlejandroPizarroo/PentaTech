@@ -7,13 +7,11 @@ import {Link} from 'react-router-dom';
 
 var emailData = new URLSearchParams();
 var passwordPostData = new URLSearchParams();
-var passwordPatchData = new URLSearchParams();
 const emailRegex = /^[\w.%+-]+@tec\.mx$/i;
 
 const LoginPage = () => {
-    //const [emailData, setEmailData] = useState(new URLSearchParams());
     const saveEmailRequestOptions = {
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: emailData
     };
@@ -58,7 +56,6 @@ const LoginPage = () => {
             if (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value)){
 
                 emailData.append('password', event.target.value);
-                console.log(typeof event.target.value);
                 handleLogin();
             }
         } else {
@@ -68,14 +65,8 @@ const LoginPage = () => {
     };
 
     const handleContinue = () => {
-        var emailInput = document.getElementById("email-input").value;
+         var emailInput = document.getElementById("email-input").value;
         emailData.append('email', emailInput);
-        saveEmailRequestOptions.body.email = emailInput;
-         console.log(saveEmailRequestOptions.body.email);
-         //console.log(emailData.toString())
-        //var emailInput = document.getElementById("email-input").value;
-        //setEmailData();
-
 
         fetch('http://localhost:5000/api/login/saveTemporalPassword', saveEmailRequestOptions)
             .then(response => response.json())
@@ -88,12 +79,11 @@ const LoginPage = () => {
                 console.error(error);
                 setErrorMessage('Invalid IBM email address');
             });
-        emailData = new URLSearchParams();
-        /*if(otpContinue === true) {
-            console.log("en otpContinue === false")
+        if(otpContinue === true) {
             var resendButton = document.getElementById("resend-button");
             resendButton.disabled = "true";
-        }*/
+        }
+        emailData = new URLSearchParams();
     };
 
     const handleLogin = () => {
