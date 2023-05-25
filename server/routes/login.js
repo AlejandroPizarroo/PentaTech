@@ -4,7 +4,8 @@ const generateEmail = require("../emailSender");
 const temporalPassword = require("../models/temporalPasswords");
 const generateTemporalPassword = require("../temporalPassword");
 const saltLength = 3;
-router.put("/saveTemporalPassword", async(req, res) => {
+
+router.put("/requestOtpForEmail", async(req, res) => {
    try {
       const tempPassword = generateTemporalPassword(saltLength)
       const updatedTemporalPassword = await temporalPassword.findOneAndUpdate(

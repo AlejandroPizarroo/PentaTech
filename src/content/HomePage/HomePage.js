@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React/*, {useState}*/ from 'react';
 import {Theme, Header, HeaderName, HeaderGlobalBar, OverflowMenu, OverflowMenuItem} from '@carbon/react';
 import {Content, Grid, Column, Button} from '@carbon/react';
 import {User, Upload, Filter, Search} from '@carbon/react/icons';
 import homeImage from './homePageImage.jpg';
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 
 const HomePage = () => {
-    const [pageDir] = useState('/login');
+    // const [pageDir] = useState('/login');
 
     return (
         <>
@@ -17,12 +17,10 @@ const HomePage = () => {
                     </HeaderName>
                     <HeaderGlobalBar>
                         <OverflowMenu
-                            flipped="true"
+                            flipped={true}
                             renderIcon={() => <User size={20}/>}
                             size="lg">
-                            <Link to={pageDir} className="overflow-menu-link">
-                                <OverflowMenuItem itemText="Log in" className="overflow-menu-item"/>
-                            </Link>
+                            <OverflowMenuItem href="/login" itemText="Log in" className="overflow-menu-item"/>
                         </OverflowMenu>
                     </HeaderGlobalBar>
                 </Header>

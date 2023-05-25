@@ -4,7 +4,6 @@ const certificationSchema = require("../models/certification")
 const router = express.Router();
 
 // create certification
-
 router.post("/certifications", (req,res) => {
     const certification = certificationSchema(req.body);
     certification
@@ -59,7 +58,6 @@ router.delete("/certifications/:id", (req,res) => {
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error}))
 })
-
 
 // get only org from all dataset
 router.get("/certifications/all/orgs", (req, res) => {

@@ -26,5 +26,6 @@ const temporalPasswordsSchema = new Schema(
         timestamps: true
     }
 );
+
 const temporalPassword = model("temporalPassword", temporalPasswordsSchema);
 module.exports = temporalPassword;
