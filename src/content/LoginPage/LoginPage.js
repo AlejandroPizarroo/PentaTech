@@ -4,27 +4,31 @@ import {Content,TextInput, Button} from '@carbon/react';
 import {ArrowRight} from '@carbon/react/icons';
 import {Link} from 'react-router-dom';
 
-var formData = new URLSearchParams();
+
+var emailData = new URLSearchParams();
+var passwordPostData = new URLSearchParams();
+var passwordPatchData = new URLSearchParams();
 const emailRegex = /^[\w.%+-]+@tec\.mx$/i;
 
 const LoginPage = () => {
-    const saveTemporalPasswordRequestOptions = {
+    //const [emailData, setEmailData] = useState(new URLSearchParams());
+    const saveEmailRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData
+        body: emailData
     };
 
     const verifyPasswordRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData
+        body: passwordPostData
     }
 
     const [errorMessage, setErrorMessage] = useState('');
     const [pageDir, setPageDir] = useState('/login');
-    const [twoFACode, setTwoFACode] = useState('');
+   // const [twoFACode, setTwoFACode] = useState('');
     const [twoFAErrorMessage, setTwoFAErrorMessage] = useState('');
-    let [otpContinue, setOtpContinue] = useState(true);
+    let [otpContinue, setOtpContinue] = useState(false);
     const [isValidEmail, setIsValidEmail]  = useState(false);
     // PEDIRLE AYUDA A HECTOR
     const [userEmail, setUserEmail] = useState('');
@@ -37,51 +41,59 @@ const LoginPage = () => {
 
     const handleEmailInputChange = (event) => {
         if (emailRegex.test(event.target.value)) {
-            formData.append('email', event.target.value);
+            //formData.append('email', event.target.value);
             setUserEmail(event.target.value);
             setIsValidEmail(true);
         } else {
-            formData = new URLSearchParams();
+           // formData = new URLSearchParams();
             setPageDir('/login');
             setIsValidEmail(false);
         }
     };
 
     const handleTwoFACodeChange = (event) => {
-        setTwoFACode(event.target.value);
+
         if (event.target.value.length === 0 || (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value))) {
             setTwoFAErrorMessage('');
             if (event.target.value.length === 6 &&/^[a-z0-9]{6}$/.test(event.target.value)){
 
-                formData.append('password', event.target.value);
+                emailData.append('password', event.target.value);
+                console.log(typeof event.target.value);
                 handleLogin();
             }
         } else {
             setPageDir("/login");
-            formData = new URLSearchParams();
+            //formData = new URLSearchParams();
         }
     };
 
-    const handleRequestTwoFA = () => {
-        if(isValidEmail){
-            fetch('http://localhost:5000/api/login/saveTemporalPassword', saveTemporalPasswordRequestOptions)
-                .then(response => response.json())
-                .then(_ => {
-                    setErrorMessage('');
-                    setTwoFAErrorMessage('');
-                })
-                .catch(error => {
-                    console.error(error);
-                    setErrorMessage('Invalid IBM email address');
-                });
-            formData = new URLSearchParams();
-            if(otpContinue === false) {
-                var resendButton = document.getElementById("resend-button");
-                resendButton.disabled = "true";
-            }
-            setOtpContinue(false);
-        }
-        setErrorMessage(isValidEmail ? '' : 'Invalid IBM email address');
+    const handleContinue = () => {
+        var emailInput = document.getElementById("email-input").value;
+        emailData.append('email', emailInput);
+        saveEmailRequestOptions.body.email = emailInput;
+         console.log(saveEmailRequestOptions.body.email);
+         //console.log(emailData.toString())
+        //var emailInput = document.getElementById("email-input").value;
+        //setEmailData();
+
+
+        fetch('http://localhost:5000/api/login/saveTemporalPassword', saveEmailRequestOptions)
+            .then(response => response.json())
+            .then(_ => {
+                setErrorMessage('');
+                setTwoFAErrorMessage('');
+                setOtpContinue(true);
+            })
+            .catch(error => {
+                console.error(error);
+                setErrorMessage('Invalid IBM email address');
+            });
+        emailData = new URLSearchParams();
+        /*if(otpContinue === true) {
+            console.log("en otpContinue === false")
+            var resendButton = document.getElementById("resend-button");
+            resendButton.disabled = "true";
+        }*/
     };
 
     const handleLogin = () => {
@@ -98,7 +110,7 @@ const LoginPage = () => {
                 console.error('Error', error);
                 setErrorMessage("Internal server error");
             });
-        formData = new URLSearchParams();
+       // formData = new URLSearchParams();
     };
 
     return (
@@ -114,19 +126,18 @@ const LoginPage = () => {
                 <div className="content-div">
                     <Theme theme="g100">
                         <h3 className="header-padding">Log in to the IBM Certifications Dashboard</h3>
-                        {otpContinue ? (
+                        {!otpContinue ? (
                             <>
                                 <TextInput
                                     id="email-input"
                                     type="email"
                                     labelText="w3id Credentials"
-                                    onChange={handleEmailInputChange}
                                     placeholder="username@ibm.com"
                                     invalid={errorMessage !== ''}
                                     invalidText={errorMessage}
                                     className="email-input"
                                 />
-                                <Button onClick={handleRequestTwoFA} id="continue-button" renderIcon={ArrowRight} className="continue-button">
+                                <Button onClick={handleContinue} id="continue-button" renderIcon={ArrowRight} className="continue-button">
                                     Continue
                                 </Button>
                             </>
@@ -134,7 +145,7 @@ const LoginPage = () => {
                             <>
                                 <p className="log-in-message">
                                     Logging in as {userEmail}&nbsp;
-                                    <Button className="function-text" onClick={() => setOtpContinue(true)}>
+                                    <Button className="function-text" onClick={() => setOtpContinue(false)}>
                                         Not you?
                                     </Button>
                                 </p>
@@ -150,7 +161,7 @@ const LoginPage = () => {
                                         maxLength={6}
                                     />
                                 </div>
-                                <Button onClick={handleRequestTwoFA} id="resend-button" className="resend-button" kind="secondary" >
+                                <Button onClick={handleContinue} id="resend-button" className="resend-button" kind="secondary" >
                                     Resend OTP
                                 </Button>
                                 <Link to={pageDir} className="log-in-link">
