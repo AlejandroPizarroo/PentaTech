@@ -28,11 +28,11 @@ const DashboardPage = () => {
         chartRef1.current = new Chart(donutChart1, {
             type: 'doughnut',
             data: {
-                labels: ['Label 1', 'Label 2', 'Label 3'],
+                labels: ['Guadalajara', 'Mexico City', 'Vancouver'],
                 datasets: [
                     {
-                        data: [10, 20, 30],
-                        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56'],
+                        data: [30, 20, 25],
+                        backgroundColor: ['#005d5d', '#1192e8', '#6929c4'],
                     },
                 ],
             },
@@ -40,7 +40,7 @@ const DashboardPage = () => {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Bar Chart',
+                        text: 'Work Location',
                         font: {
                             family: 'IBM Plex Sans',
                             size: 16,
@@ -60,11 +60,11 @@ const DashboardPage = () => {
         chartRef2.current = new Chart(donutChart2, {
             type: 'doughnut',
             data: {
-                labels: ['Label 4', 'Label 5', 'Label 6'],
+                labels: ['DevOps', 'Agile', 'Cibersecurity'],
                 datasets: [
                     {
                         data: [15, 25, 35],
-                        backgroundColor: ['#ff0000', '#00ff00', '#0000ff'],
+                        backgroundColor: ['#8300c5', '#001e4a', '#00a29d'],
                     },
                 ],
             },
@@ -72,7 +72,7 @@ const DashboardPage = () => {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Bar Chart',
+                        text: 'Main Area of Certification',
                         font: {
                             family: 'IBM Plex Sans',
                             size: 16,
@@ -92,12 +92,12 @@ const DashboardPage = () => {
         chartRef3.current = new Chart(barChart, {
             type: 'bar',
             data: {
-                labels: ['Label 7', 'Label 8', 'Label 9', 'Label 10', 'Label 11', 'Label 12'],
+                labels: ['2008-2010', '2011-2013', '2014-2016', '2017-2019', '2020-2023'],
                 datasets: [
                     {
-                        label: 'Bar Chart',
-                        data: [5, 10, 15, 20, 8, 14],
-                        backgroundColor: ['#ffcc00', '#00ccff', '#cc00ff', '#cc00ff', '#cc00ff', '#cc00ff'],
+                        label: 'Dataset',
+                        data: [5, 10, 15, 20, 8],
+                        backgroundColor: ['#5d0000', '#b3004c', '#00605f', '#007feb', '#8300c5'],
                     },
                 ],
             },
@@ -105,7 +105,7 @@ const DashboardPage = () => {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Bar Chart',
+                        text: 'Issue Date',
                         font: {
                             family: 'IBM Plex Sans',
                             size: 16,
@@ -129,7 +129,7 @@ const DashboardPage = () => {
                 datasets: [
                     {
                         data: [75, 25],
-                        backgroundColor: ['#00ff00', '#d3d3d3'],
+                        backgroundColor: ['#8300c5', '#d3d3d3'],
                     },
                 ],
             },
@@ -161,7 +161,7 @@ const DashboardPage = () => {
                 datasets: [
                     {
                         data: [40, 60],
-                        backgroundColor: ['#ffcc00', '#d3d3d3'],
+                        backgroundColor: ['#29009e', '#d3d3d3'],
                     },
                 ],
             },
@@ -193,7 +193,7 @@ const DashboardPage = () => {
                 datasets: [
                     {
                         data: [90, 10],
-                        backgroundColor: ['#ff0000', '#d3d3d3'],
+                        backgroundColor: ['#007feb', '#d3d3d3'],
                     },
                 ],
             },
@@ -225,7 +225,7 @@ const DashboardPage = () => {
                 datasets: [
                     {
                         data: [80, 20],
-                        backgroundColor: ['#ff00ff', '#d3d3d3'],
+                        backgroundColor: ['#00827c', '#d3d3d3'],
                     },
                 ],
             },
@@ -257,7 +257,7 @@ const DashboardPage = () => {
                 datasets: [
                     {
                         data: [60, 40],
-                        backgroundColor: ['#00ffff', '#d3d3d3'],
+                        backgroundColor: ['#b3004c', '#d3d3d3'],
                     },
                 ],
             },
@@ -289,7 +289,7 @@ const DashboardPage = () => {
                 datasets: [
                     {
                         data: [50, 50],
-                        backgroundColor: ['#0000ff', '#d3d3d3'],
+                        backgroundColor: ['#001e4a', '#d3d3d3'],
                     },
                 ],
             },
