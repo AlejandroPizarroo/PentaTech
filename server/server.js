@@ -6,6 +6,7 @@ const cors = require('cors');
 // se importan las rutas
 const loginRoute = require("./routes/login");
 const certificationRoutes = require("./routes/certification")
+const udemyPopularRoutes = require("./routes/udemyPopular")
 
 const app = express();
 const port = process.env.PORT;
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/login", loginRoute);
 app.use("/api/ibm", certificationRoutes)
+app.use("/api/udemy", udemyPopularRoutes)
 
 //routes 
 app.get("/", (req, res) => {
