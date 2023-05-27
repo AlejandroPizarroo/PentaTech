@@ -1,12 +1,11 @@
-import React/*, {useState}*/ from 'react';
+import React from 'react';
 import {Theme, Header, HeaderName, HeaderGlobalBar, OverflowMenu, OverflowMenuItem} from '@carbon/react';
 import {Content, Grid, Column, Button} from '@carbon/react';
 import {User, Upload, Filter, Search} from '@carbon/react/icons';
 import homeImage from './homePageImage.jpg';
-// import {Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const HomePage = () => {
-    // const [pageDir] = useState('/login');
 
     return (
         <>
@@ -20,7 +19,7 @@ const HomePage = () => {
                             flipped={true}
                             renderIcon={() => <User size={20}/>}
                             size="lg">
-                            <OverflowMenuItem href="/login" itemText="Log in" className="overflow-menu-item"/>
+                            <OverflowMenuItem href='/login' itemText="Log in" className="overflow-menu-item"/>
                         </OverflowMenu>
                     </HeaderGlobalBar>
                 </Header>
@@ -34,7 +33,9 @@ const HomePage = () => {
                             the rest of the industry using an interactive dashboard to upload, filter,
                             and search all important information through one single platform.
                         </p>
-                        <Button href="/login">Log in</Button>
+                        <Link to='/login'>
+                            <Button>Log in</Button>
+                        </Link>
                     </Column>
                     <Column lg={8} md={4} sm={4}>
                         <img src={homeImage} alt="Interior of a Summit node" className="home-image"/>

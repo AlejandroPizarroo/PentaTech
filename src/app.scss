@@ -1,4 +1,5 @@
-// Use corresponding .scss file for each page
+ // Use corresponding .scss file for each page
 @use './content/HomePage/home-page';
 @use './content/LoginPage/login-page';
 @use './content/DashboardPage/dashboard-page';
+ @use './content/ErrorPage/error-page';
