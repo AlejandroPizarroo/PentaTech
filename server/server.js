@@ -7,6 +7,7 @@ const cors = require('cors');
 const loginRoute = require("./routes/login");
 const certificationRoutes = require("./routes/certification")
 const udemyPopularRoutes = require("./routes/udemyPopular")
+const courseraRoutes = require("./routes/courseraCertification")
 
 const app = express();
 const port = process.env.PORT;
@@ -20,9 +21,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//middleware
 app.use("/api/login", loginRoute);
 app.use("/api/ibm", certificationRoutes)
 app.use("/api/udemy", udemyPopularRoutes)
+app.use("/api/coursera", courseraRoutes)
 
 //routes 
 app.get("/", (req, res) => {
