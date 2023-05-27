@@ -8,6 +8,7 @@
   background: url("loginPageImage.jpg") no-repeat center center fixed;
   background-size: cover;
   display: flex;
+  overflow: scroll;
 }
 
 .content-div {
@@ -69,12 +70,6 @@
   padding-top: $spacing-07;
   padding-right: $spacing-06;
   padding-left: $spacing-06;
-}
-
-.log-in-link {
-  text-decoration: none;
-  height: 100%;
-  width: 100%;
 }
 
 .resend-button {

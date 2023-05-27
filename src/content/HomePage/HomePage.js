@@ -1,12 +1,17 @@
-import React/*, {useState}*/ from 'react';
+import React from 'react';
 import {Theme, Header, HeaderName, HeaderGlobalBar, OverflowMenu, OverflowMenuItem} from '@carbon/react';
 import {Content, Grid, Column, Button} from '@carbon/react';
 import {User, Upload, Filter, Search} from '@carbon/react/icons';
 import homeImage from './homePageImage.jpg';
-// import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const HomePage = () => {
-    // const [pageDir] = useState('/login');
+
+    const navigate = useNavigate();
+
+    const loginNavigate = () => {
+        navigate("/login");
+    };
 
     return (
         <>
@@ -20,7 +25,7 @@ const HomePage = () => {
                             flipped={true}
                             renderIcon={() => <User size={20}/>}
                             size="lg">
-                            <OverflowMenuItem href="/login" itemText="Log in" className="overflow-menu-item"/>
+                            <OverflowMenuItem onClick={loginNavigate} itemText="Log in" className="overflow-menu-item"/>
                         </OverflowMenu>
                     </HeaderGlobalBar>
                 </Header>
@@ -34,7 +39,7 @@ const HomePage = () => {
                             the rest of the industry using an interactive dashboard to upload, filter,
                             and search all important information through one single platform.
                         </p>
-                        <Button href="/login">Log in</Button>
+                            <Button onClick={loginNavigate}>Log in</Button>
                     </Column>
                     <Column lg={8} md={4} sm={4}>
                         <img src={homeImage} alt="Interior of a Summit node" className="home-image"/>
@@ -44,21 +49,21 @@ const HomePage = () => {
                     <Column lg={4} md={4} sm={4} className="info-title">
                         <h1>IBM CD</h1>
                     </Column>
-                    <Column lg={4} md={4} sm={4} className="info-columnn">
+                    <Column lg={4} md={4} sm={4} className="info-column">
                         <h3>Upload</h3>
                         <p className="info-body">
                             Store your certification information in the cloud for other employees to access.
                         </p>
                         <Upload size={32} />
                     </Column>
-                    <Column lg={4} md={4} sm={4} className="info-columnn">
+                    <Column lg={4} md={4} sm={4} className="info-column">
                         <h3>Filter</h3>
                         <p className="info-body">
                             Visualize and control employee data with an interactive dashboard and menu.
                         </p>
                         <Filter size={32} />
                     </Column>
-                    <Column lg={4} md={4} sm={4} className="info-columnn">
+                    <Column lg={4} md={4} sm={4} className="info-column">
                         <h3>Search</h3>
                         <p className="info-body">
                             Receive recommendations for each employee with artificial intelligence.

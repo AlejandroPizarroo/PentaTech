@@ -3,14 +3,9 @@
 @use '@carbon/react/scss/theme' as *;
 @use '@carbon/react/scss/type' as *;
 
-.overflow-menu-link {
-  text-decoration: none;
-  height: 100%;
-  width: 100%;
-}
-
 .overflow-menu-item {
   font-size: medium;
+  text-decoration: none;
 }
 .banner {
   background-color: #eef1f6;
@@ -54,7 +49,7 @@
   padding-bottom: $spacing-06;
 }
 
-.info-columnn {
+.info-column {
   border-left: 1px solid $border-subtle-01;
   padding-left: $spacing-06;
   padding-bottom: $spacing-06;

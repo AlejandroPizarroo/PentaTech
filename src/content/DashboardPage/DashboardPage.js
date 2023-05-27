@@ -1,13 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import { Theme, Header, HeaderName, HeaderGlobalBar, ExpandableSearch, OverflowMenu, OverflowMenuItem } from '@carbon/react';
+import { Content } from '@carbon/react';
 import { User } from '@carbon/react/icons';
 import { Link } from 'react-router-dom';
 
 
 import './_dashboard-page.scss';
 
-const DashboardPage = () => {
+const DashboardPage = ({ user }) => {
+
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+        window.history.go(1);
+    };
+
     const chartRef1 = useRef(null);
     const chartRef2 = useRef(null);
     const chartRef3 = useRef(null);
@@ -310,7 +317,11 @@ const DashboardPage = () => {
     }, []);
 
     return (
+
         <>
+            <script>
+                window.history.forward();
+            </script>
             <Theme theme="g100">
                 <Header aria-label="IBM Platform Name">
                     <HeaderName prefix="IBM">
@@ -331,6 +342,9 @@ const DashboardPage = () => {
                         </OverflowMenu>
                     </HeaderGlobalBar>
                 </Header>
+                <Content>
+                    <h1>Hello, {user?.email}</h1>
+                </Content>
             </Theme>
 
             <div className="title-container">

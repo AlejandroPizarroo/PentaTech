@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
 
-// se importan las rutas
+// Import routes
 const loginRoute = require("./routes/login");
 const certificationRoutes = require("./routes/certification")
 const udemyPopularRoutes = require("./routes/udemyPopular")
@@ -12,7 +12,7 @@ const courseraRoutes = require("./routes/courseraCertification")
 const app = express();
 const port = process.env.PORT;
 
-//conect to databse
+//Connect to database
 mongoose.connect(process.env.MONGO_URI)
 .then(()=> console.log("Connected to database"))
 .catch((error) =>console.error(error))
