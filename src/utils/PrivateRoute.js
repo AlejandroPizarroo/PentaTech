@@ -3,14 +3,7 @@ import { Navigate } from "react-router-dom";
 
 const otpVerification = (password) => {
     return new Promise((resolve) => {
-        const data = new URLSearchParams();
-        data.append('password', password);
-        const otpVerificationRequest = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: data
-        }
-        fetch('http://localhost:5000/api/login/requestOtpVerification',  otpVerificationRequest)
+        fetch(`http://localhost:5000/api/login/requestOtpVerification/${password}`)
             .then(response => response.json())
             .then((res) => {
                 if(res.success) {

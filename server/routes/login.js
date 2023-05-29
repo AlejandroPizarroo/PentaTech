@@ -30,8 +30,8 @@ router.put("/requestOtpCreation", async(req, res) => {
    }
 });
 
-router.post("/requestOtpVerification", async(req, res) => {
-   const password = req.body.password;
+router.get("/requestOtpVerification/:password", async(req, res) => {
+   const { password } = req.params;
    try {
       const passwordExists = await temporalPassword.exists({ password });
       if (passwordExists) {
