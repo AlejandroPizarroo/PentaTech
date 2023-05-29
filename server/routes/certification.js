@@ -3,7 +3,7 @@ const certificationSchema = require("../models/certification")
 
 const router = express.Router();
 
-// create certification
+// create certification using POST method all model paremeters required
 router.post("/certifications", (req,res) => {
     const certification = certificationSchema(req.body);
     certification
@@ -12,7 +12,7 @@ router.post("/certifications", (req,res) => {
     .catch((error) => res.json({ message: error}))
 })
 
-// get all certifications
+// get all certifications with all parameters
 router.get("/certifications", (req,res) => {
     certificationSchema
     .find()
@@ -20,7 +20,8 @@ router.get("/certifications", (req,res) => {
     .catch((error) => res.json({ message: error}))
 })
 
-// get all certifications from udemy
+// get all certifications from an especific 'org' e.g(Finance and Operations)
+// Along with all the parameters
 router.get("/certifications/:org", (req,res) => {
     const { org } = req.params
     certificationSchema
@@ -31,16 +32,8 @@ router.get("/certifications/:org", (req,res) => {
     .catch((error) => res.json({ message: error}))
 })
 
-// get specific certification by id
-router.get("/certifications/:id", (req,res) => {
-    const { id } = req.params;
-    certificationSchema
-    .findById(id)
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error}))
-})
-
 // update certification
+// NOT WORKING WITH ACTUAL SCHEMA!!!
 router.put("/certifications/:id", (req,res) => {
     const { id } = req.params;
     const { uid, org, certification} = req.body;
@@ -51,6 +44,7 @@ router.put("/certifications/:id", (req,res) => {
 })
 
 // delete certification
+// NEED TEST!
 router.delete("/certifications/:id", (req,res) => {
     const { id } = req.params;
     certificationSchema
@@ -59,7 +53,7 @@ router.delete("/certifications/:id", (req,res) => {
     .catch((error) => res.json({ message: error}))
 })
 
-// get only org from all dataset
+// get only org from all dataset in a list
 router.get("/certifications/all/orgs", (req, res) => {
     certificationSchema.find({}, 'org')
       .then((results) => {
@@ -75,24 +69,26 @@ router.get("/certifications/all/orgs", (req, res) => {
   });
 
   // get how many times a parameter (:parametr) repeats
+  // only get group (parameter) and value (times the parameter repeats)
 router.get("/certifications/count/:parametr", (req, res) => {
-    const { parametr } = req.params;
-certificationSchema.aggregate([
+  const { parametr } = req.params;
+  certificationSchema.aggregate([
     { $group: { _id: "$" + parametr, count: { $sum: 1 } } },
     { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
     { $sort: { value: -1 } },                                 // sort descending
     //{ $limit: 10 }                                          // choose the number of groups
-])
+  ])
     .then((results) => {
-    res.json(results);
+      res.json(results);
     })
     .catch((err) => {
-    console.log(err);
-    res.status(500).send('Error retrieving how many times a parameter repeats');
+      console.log(err);
+      res.status(500).send('Error retrieving how many times a parameter repeats');
     });
 });
 
 // get all certifications from specific uid
+// along with all the parameters
 router.get("/certifications/uid/:uid", (req,res) => {
     const { uid } = req.params
     certificationSchema
@@ -104,6 +100,7 @@ router.get("/certifications/uid/:uid", (req,res) => {
 })
 
 // get all certifications from specific uid
+// along with database id
 router.get("/certifications/uidv2/:uid", (req, res) => {
     const { uid } = req.params;
     certificationSchema
@@ -120,5 +117,24 @@ router.get("/certifications/uidv2/:uid", (req, res) => {
         res.status(500).send('Error retrieving certifications by uid');
         });
   });
-  
+
+// Retrieve only certifications from specific uid
+router.get("/certifications/uidv3/:uid", (req, res) => {
+  const { uid } = req.params;
+  certificationSchema
+    .find({ uid }, { certification: 1, _id: 0 }) // Specify fields to include/exclude
+    .then((data) => {
+      if (!data) {
+        res.json({ message: "Invalid uid" });
+      } else {
+        res.json(data);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving certifications by uid');
+    });
+});
+
+
 module.exports = router;

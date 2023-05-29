@@ -10,6 +10,7 @@ router.get("/raw/certification", (req,res) => {
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error}))
 })
+
 // Retrieve data all coursera certifications in one object / list
 router.get('/list/certification', async (req, res) => {
     const parameterName = 'certification'; // Replace with the actual parameter name
@@ -30,6 +31,7 @@ router.get('/list/certification', async (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     }
   });
+
 // Retrieve data all coursera certifications in separate objects
   router.get('/object/certification', async (req, res) => {
     const parameterName = 'certification'; // Replace with the actual parameter name
