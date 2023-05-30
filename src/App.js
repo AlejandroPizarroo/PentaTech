@@ -19,7 +19,7 @@ function App() {
                     path='dashboard'
                     element={
                         <PrivateRoute user={user}>
-                            <DashboardPage user={user} />
+                            <DashboardPage user={user} setUser={setUser}/>
                         </PrivateRoute>
                     }
                 />

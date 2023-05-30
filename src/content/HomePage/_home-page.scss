@@ -7,6 +7,14 @@
   font-size: medium;
   text-decoration: none;
 }
+
+.home-background {
+  height: calc(100vh - 3rem);
+  width: 100vw;
+  background-color: $layer-01;
+  overflow: scroll;
+}
+
 .banner {
   background-color: #eef1f6;
 }
@@ -39,7 +47,6 @@
 }
 
 .info {
-  background-color: $layer-01;
   position: relative;
   padding-top: $spacing-06;
   padding-bottom: $spacing-06;

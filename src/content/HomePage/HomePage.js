@@ -30,7 +30,7 @@ const HomePage = () => {
                     </HeaderGlobalBar>
                 </Header>
             </Theme>
-            <Content>
+            <Content className="home-background">
                 <Grid className="banner">
                     <Column lg={8} md={4} sm={4} className="header">
                         <h1>Your one-stop certifications hub</h1>

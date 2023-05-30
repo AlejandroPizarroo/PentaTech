@@ -2,17 +2,24 @@ import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import { Theme, Header, HeaderName, HeaderGlobalBar, ExpandableSearch, OverflowMenu, OverflowMenuItem } from '@carbon/react';
 import { Content } from '@carbon/react';
-import { User } from '@carbon/react/icons';
-import { Link } from 'react-router-dom';
+import { User, Upload, Search } from '@carbon/react/icons';
+import {useNavigate} from 'react-router-dom';
 
 
 import './_dashboard-page.scss';
 
-const DashboardPage = ({ user }) => {
+const DashboardPage = ({ user, setUser }) => {
 
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
         window.history.go(1);
+    };
+
+    const navigate = useNavigate();
+
+    const loginNavigate = () => {
+        setUser();
+        navigate("/");
     };
 
     const chartRef1 = useRef(null);
@@ -328,17 +335,25 @@ const DashboardPage = ({ user }) => {
                         <span style={{ fontWeight: 'bold' }}>Certifications Dashboard</span>
                     </HeaderName>
                     <HeaderGlobalBar>
-                        <ExpandableSearch
-                            size="lg"
-                            placeholder="Search by Uid"
-                            id="search-explandable-1"
-                            onChange={() => {}}
-                            onKeyDown={() => {}}
-                        />
-                        <OverflowMenu aria-label="User" flipped={true} renderIcon={User} size="lg">
-                            <OverflowMenuItem itemText="Log out" href="/">
-                                <Link to="/" />
-                            </OverflowMenuItem>
+                        <div className="expandable-search">
+                            <ExpandableSearch
+                                renderIcon={() => <Search size={20} className="search-icon"/>}
+                                size="lg"
+                                placeholder="Search by Uid"
+                                id="search-explandable-1"
+                                onChange={() => {}}
+                                onKeyDown={() => {}}
+                            />
+                        </div>
+                        <OverflowMenu
+                            // onClick={}
+                            renderIcon={() => <Upload size={20} />}
+                            size="lg"/>
+                        <OverflowMenu
+                            flipped={true}
+                            renderIcon={() => <User size={20}/>}
+                            size="lg">
+                            <OverflowMenuItem onClick={loginNavigate} itemText="Log out" className="overflow-menu-item"/>
                         </OverflowMenu>
                     </HeaderGlobalBar>
                 </Header>
