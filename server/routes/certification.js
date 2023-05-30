@@ -135,6 +135,37 @@ router.get("/certifications/uidv3/:uid", (req, res) => {
       res.status(500).send('Error retrieving certifications by uid');
     });
 });
+//retrive how many unique values for org parameter only
+router.get("/certifications/num2/orgs", (req, res) => {
+  
+  certificationSchema.distinct('org')
+    .then((orgs) => {
+      const uniqueOrgsCount = orgs.length;
+      res.json({ count: uniqueOrgsCount });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving orgs');
+    });
+});
+
+//retrive how many unique values for any parameter defined in the schema
+//need to replace :field with the actual parameter like num/uid
+
+router.get("/certifications/num/:field", (req, res) => {
+  const field = req.params.field;
+  certificationSchema.distinct(field)
+    .then((values) => {
+      const uniqueValuesCount = values.length;
+      res.json({ count: uniqueValuesCount });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving values');
+    });
+});
+
+
 
 
 module.exports = router;
