@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {Header, HeaderName, Theme} from '@carbon/react';
-import {Content,TextInput, Button} from '@carbon/react';
+import {Content,TextInput, PasswordInput, Button} from '@carbon/react';
 import {ArrowRight} from '@carbon/react/icons';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = ({ user, setUser }) => {
     let data = new URLSearchParams();
-    const [userEmail, setUserEmail] = useState(user?.email);
+    const [userEmail, setUserEmail] = useState(user?.email ? user.email : '');
     const [userPassword, setUserPassword] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [passwordError] = useState(user?.password ? 'Invalid One-Time Password' : '');
+    const [passwordError, setPasswordError] = useState(user?.password ? 'Invalid One-Time Password' : '');
     const navigate = useNavigate();
 
     const otpCreationRequest = {
@@ -23,22 +23,31 @@ const LoginPage = ({ user, setUser }) => {
             document.getElementById("resend-button").disabled = true;
         }
         data = new URLSearchParams();
-        data.append('email', userEmail.toString());
+        data.append('email', userEmail ? userEmail.toString(): ' ');
         otpCreationRequest.body = data;
         fetch('http://localhost:5000/api/login/requestOtpCreation', otpCreationRequest)
             .then(response => response.json())
             .then(_ => {
                 setEmailError('');
-                setUser({ email: userEmail });
+                setUser({email: userEmail});
+                setPasswordError('');
             })
             .catch(_ => {
-                setEmailError('Internal server error. Please try again later.');
+                if(_.name === "TypeError") {
+                    setEmailError('Internal server error (Please try again later)');
+                } else {
+                    setEmailError('Invalid IBM email address');
+                }
             });
     };
 
     const handleLoginRequest = () => {
-        setUser({ email: user.email, password: userPassword ?userPassword : ' '});
-        navigate('/dashboard');
+        if(userPassword.length === 6) {
+            setUser({ email: user.email, password: userPassword ? userPassword : ''});
+            navigate('/dashboard');
+        } else {
+            setPasswordError('Invalid One-Time Password');
+        }
     };
 
     return (
@@ -80,7 +89,7 @@ const LoginPage = ({ user, setUser }) => {
                                     </Button>
                                 </p>
                                 <div className="password-input">
-                                    <TextInput.PasswordInput
+                                    <PasswordInput
                                         id="password-input"
                                         type="password"
                                         labelText="One-Time Password"

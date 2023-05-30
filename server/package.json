@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jaccard-index": "^0.2.0",
     "mongoose": "^7.0.5"
   },
   "devDependencies": {

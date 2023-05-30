@@ -1,2 +1,24 @@
+@use '@carbon/react/scss/spacing' as *;
+
 .error-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.error-image {
+  height: 50%;
+  width: 50%;
+  padding-bottom: $spacing-06;
+}
+
+.text-spacing {
+  padding-bottom: $spacing-06;
+}
+
+.button {
+  padding-left: $spacing-06;
+  padding-right: $spacing-06;
 }

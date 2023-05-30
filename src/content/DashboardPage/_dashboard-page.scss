@@ -1,3 +1,38 @@
+@use '@carbon/colors';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+
+.icon-button {
+  background-color: colors.$gray-100;
+  border-bottom: 1px solid $border-subtle-01;
+}
+
+.icon-button:hover {
+  background-color: colors.$gray-100-hover;
+  border-bottom: 1px solid $border-subtle-01;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+}
+
+.expandable-search {
+  width: inherit;
+}
+
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .dashboard-container {
   display: grid;
   grid-template-columns: 2fr 2fr 0fr 0fr 0fr;
