@@ -165,6 +165,67 @@ router.get("/certifications/num/:field", (req, res) => {
     });
 });
 
+router.get("/certifications/all/orgs/uid", (req, res) => {
+  certificationSchema.aggregate([
+    {
+      $group: {
+        _id: "$org",
+        uniqueUidsCount: { $addToSet: "$uid" }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        group: "$_id",
+        value: { $size: "$uniqueUidsCount" }
+      }
+    },
+    {
+      $sort: {
+        value:-1
+      }
+    }
+  ])
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving orgs');
+    });
+});
+
+
+router.get("/certifications/all/location/uid", (req, res) => {
+  certificationSchema.aggregate([
+    {
+      $group: {
+        _id: "$work_location",
+        uniqueUidsCount: { $addToSet: "$uid" }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        group: "$_id",
+        value: { $size: "$uniqueUidsCount" }
+      }
+    },
+    {
+      $sort: {
+        value:-1
+      }
+    }
+  ])
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving orgs');
+    });
+});
+
 
 
 
