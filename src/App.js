@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import HomePage from './content/HomePage';
 import LoginPage from './content/LoginPage';
 import DashboardPage from './content/DashboardPage';
+import DashboardTest from './content/DashboardTest';
 import PrivateRoute from "./utils/PrivateRoute";
 import ErrorPage from './content/ErrorPage';
 
@@ -23,6 +24,7 @@ function App() {
                         </PrivateRoute>
                     }
                 />
+                <Route path='test' element={<DashboardTest/>}/>
                 <Route path="*" element={<ErrorPage />}/>
             </Routes>
         </BrowserRouter>
