@@ -105,6 +105,28 @@ router.get("/certifications/count/top/:parametr", (req, res) => {
     });
 });
 
+//issue date
+router.get("/certifications/count/stock/date", (req, res) => {
+  //const { parametr } = req.params; //parameter instead of only date
+  certificationSchema.aggregate([
+    { $group: { _id: "$issue_date", count: { $sum: 1 } } },
+    { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    //{ $sort: { value: -1 } }                                 // sort descending
+  ])
+    .then((results) => {
+      results.sort((a, b) => {
+        const dateA = new Date(a.group);
+        const dateB = new Date(b.group);
+        return dateA - dateB;
+      });
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving how many times a parameter repeats');
+    });
+});
+
 // get all certifications from specific uid
 // along with all the parameters
 router.get("/certifications/uid/:uid", (req,res) => {
