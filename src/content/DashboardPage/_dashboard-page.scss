@@ -2,16 +2,8 @@
 @use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/theme' as *;
 @use '@carbon/react/scss/breakpoint' as *;
-
-.icon-button {
-  background-color: colors.$gray-100;
-  border-bottom: 1px solid $border-subtle-01;
-}
-
-.icon-button:hover {
-  background-color: colors.$gray-100-hover;
-  border-bottom: 1px solid $border-subtle-01;
-}
+//@import "https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed|IBM+Plex+Sans:400,600&display=swap";
+//@import "https://unpkg.com/carbon-components/css/carbon-components.min.css";
 
 .search-icon {
   position: absolute;
@@ -25,58 +17,88 @@
   width: inherit;
 }
 
-
-.search-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.background {
+  background-color: colors.$gray-90;
+  height: calc(100vh - 3rem);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  @include breakpoint(md) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  @include breakpoint(sm) {
+    padding: 4px;
+  }
 }
 
-.dashboard-container {
-  display: grid;
-  grid-template-columns: 2fr 2fr 0fr 0fr 0fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 80px;
-  width: 100%;
-  padding-top: 50px;
-
-  /* Estilos visuales */
-  border: 1px solid #ccc;
-  background-color: #f5f5f5;
-}
-
-
-
-.chart-container {
-  width: 100%;
-  height: 100%;
-
-  /* Estilos visuales */
-  border: 1px solid #999;
-  background-color: #fff;
-}
-
-.canvas-container {
-  width: 100%;
-  height: 100%;
-
-  /* Estilos visuales */
-  background-color: #eee;
-}
-
-
-.title-container {
+.greeting {
+  border: 2px solid colors.$gray-90;
+  background-color: colors.$gray-100;
+  padding: $spacing-06;
   display: flex;
-  justify-content: left;
-  margin-top: 5rem;
-  padding-left: 50px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.subtitle-container {
-  display: flex;
-  justify-content: right;
-  margin-top: -1rem;
-  padding-right: 180px;
+.greeting-hello {
+  font-weight: normal;
+  @include breakpoint(md) {
+    font-size: 40px;
+  }
+  @include breakpoint(sm) {
+    font-size: 35px;
+  }
+}
 
+
+.greeting-user  {
+  color: colors.$magenta-70;
+  font-weight: normal;
+  @include breakpoint(md) {
+    font-size: 40px;
+  }
+  @include breakpoint(sm) {
+    font-size: 35px;
+  }
+}
+
+.summary {
+  color: colors.$teal-60;
+  font-weight: normal;
+  @include breakpoint(md) {
+    font-size: 40px;
+  }
+  @include breakpoint(sm) {
+    font-size: 35px;
+  }
+}
+
+.grid-column {
+  border: 2px solid colors.$gray-90;
+  background-color: colors.$gray-100;
+  padding: $spacing-06;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.grid-graph {
+  border: 2px solid colors.$gray-90;
+  background-color: colors.$gray-100;
+  padding-right: $spacing-08;
+  padding-bottom: $spacing-06;
+  padding-left: $spacing-08;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.loading {
+  margin-top: $spacing-06;
 }
