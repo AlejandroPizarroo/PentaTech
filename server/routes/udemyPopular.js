@@ -11,7 +11,7 @@ router.get("/popular/count/:parametr", (req, res) => {
         { $group: { _id: "$" + parametr, count: { $sum: 1 } } },
         { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
         { $sort: { value: -1 } },                                 // sort descending
-        //{ $limit: 10 }                                          // choose the number of groups
+        { $limit: 50 }                                          // choose the number of groups
     ])
         .then((results) => {
             res.json(results);

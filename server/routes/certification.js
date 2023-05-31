@@ -87,6 +87,24 @@ router.get("/certifications/count/:parametr", (req, res) => {
     });
 });
 
+//top 50 of values for any group (certification)
+router.get("/certifications/count/top/:parametr", (req, res) => {
+  const { parametr } = req.params;
+  certificationSchema.aggregate([
+    { $group: { _id: "$" + parametr, count: { $sum: 1 } } },
+    { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    { $sort: { value: -1 } },                                 // sort descending
+    { $limit: 50 }                                          // choose the number of groups
+  ])
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving how many times a parameter repeats');
+    });
+});
+
 // get all certifications from specific uid
 // along with all the parameters
 router.get("/certifications/uid/:uid", (req,res) => {
