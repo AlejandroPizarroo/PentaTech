@@ -221,7 +221,46 @@ router.get("/certifications/num/:field", (req, res) => {
     });
 });
 
-router.get("/certifications/all/orgs/uid", (req, res) => {
+//certifications by org
+router.get("/certifications/by/org", (req, res) => {
+  certificationSchema.aggregate([
+    { $group: { _id: "$org", count: { $sum: 1 } } },
+    { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    { $sort: { value: -1 } },                                 // sort descending
+    //{ $limit: 10 }                                          // choose the number of groups
+  ])
+    .then((results) => {
+      //sort alfabetically
+      results.sort((a, b) => {
+        if (a.group === null && b.group !== null) {
+          return -1;
+        }
+        if (a.group !== null && b.group === null) {
+          return 1;
+        }
+        if (a.group === null && b.group === null) {
+          return 0;
+        }
+        const nameA = a.group.toLowerCase();
+        const nameB = b.group.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving how many times a parameter repeats');
+    });
+});
+
+// uids by org
+router.get("/uids/by/org", (req, res) => {
   certificationSchema.aggregate([
     {
       $group: {
@@ -243,6 +282,27 @@ router.get("/certifications/all/orgs/uid", (req, res) => {
     }
   ])
     .then((results) => {
+      //sort alfabetically
+      results.sort((a, b) => {
+        if (a.group === null && b.group !== null) {
+          return -1;
+        }
+        if (a.group !== null && b.group === null) {
+          return 1;
+        }
+        if (a.group === null && b.group === null) {
+          return 0;
+        }
+        const nameA = a.group.toLowerCase();
+        const nameB = b.group.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
       res.json(results);
     })
     .catch((err) => {
@@ -251,8 +311,47 @@ router.get("/certifications/all/orgs/uid", (req, res) => {
     });
 });
 
+//certifications by location
+router.get("/certifications/by/location", (req, res) => {
+  certificationSchema.aggregate([
+    { $group: { _id: "$work_location", count: { $sum: 1 } } },
+    { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    { $sort: { value: -1 } },                                 // sort descending
+    //{ $limit: 10 }                                          // choose the number of groups
+  ])
+    .then((results) => {
+      //sort alfabetically
+      results.sort((a, b) => {
+        if (a.group === null && b.group !== null) {
+          return -1;
+        }
+        if (a.group !== null && b.group === null) {
+          return 1;
+        }
+        if (a.group === null && b.group === null) {
+          return 0;
+        }
+        const nameA = a.group.toLowerCase();
+        const nameB = b.group.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving how many times a parameter repeats');
+    });
+});
 
-router.get("/certifications/all/location/uid", (req, res) => {
+
+// uids by location
+router.get("/uids/by/location", (req, res) => {
   certificationSchema.aggregate([
     {
       $group: {
@@ -274,6 +373,27 @@ router.get("/certifications/all/location/uid", (req, res) => {
     }
   ])
     .then((results) => {
+      //sort alfabetically
+      results.sort((a, b) => {
+        if (a.group === null && b.group !== null) {
+          return -1;
+        }
+        if (a.group !== null && b.group === null) {
+          return 1;
+        }
+        if (a.group === null && b.group === null) {
+          return 0;
+        }
+        const nameA = a.group.toLowerCase();
+        const nameB = b.group.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
       res.json(results);
     })
     .catch((err) => {
@@ -281,6 +401,8 @@ router.get("/certifications/all/location/uid", (req, res) => {
       res.status(500).send('Error retrieving orgs');
     });
 });
+
+
 
 
 
