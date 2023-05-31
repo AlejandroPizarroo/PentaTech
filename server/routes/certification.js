@@ -1,6 +1,6 @@
 const express = require("express");
 const certificationSchema = require("../models/certification")
-
+const getRecommendations = require("../getRecommendationsHelper");
 const router = express.Router();
 
 // create certification using POST method all model paremeters required
@@ -90,14 +90,30 @@ router.get("/certifications/count/:parametr", (req, res) => {
 // get all certifications from specific uid
 // along with all the parameters
 router.get("/certifications/uid/:uid", (req,res) => {
+    let ibmAndRecommendations = [];
     const { uid } = req.params
     certificationSchema
     .find()
     .where('uid')
     .all([uid])
-    .then((data) => res.json(data))
+    .then((data) =>
+        {
+             fetch('http://localhost:5000/api/coursera/list/certification')
+                .then(response => response.json())
+                .then((response) => {
+                    ibmAndRecommendations = getRecommendations(data, response);
+                    res.json(ibmAndRecommendations)
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+        }
+        )
     .catch((error) => res.json({ message: error}))
 })
+
+
 
 // get all certifications from specific uid
 // along with database id
