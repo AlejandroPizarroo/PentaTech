@@ -6,16 +6,12 @@ function quickSortDescending(arr) {
     const pivot = arr[arr.length - 1][1];
     const left = [];
     const right = [];
-    const equal = [];
 
     for (let i = 0; i < arr.length - 1; i++) {
         if (arr[i][1] > pivot) {
             left.push(arr[i]);
         } else if(arr[i][1] < pivot){
             right.push(arr[i]);
-        }
-        else {
-            equal.push(arr[i]);
         }
     }
 
