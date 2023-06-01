@@ -110,13 +110,13 @@ router.get("/certifications/count/stock/date", (req, res) => {
   //const { parametr } = req.params; //parameter instead of only date
   certificationSchema.aggregate([
     { $group: { _id: "$issue_date", count: { $sum: 1 } } },
-    { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    { $project: { group:"Certifications",date: "$_id", value: "$count", _id: 0 } }, //modify json fields
     //{ $sort: { value: -1 } }                                 // sort descending
   ])
     .then((results) => {
       results.sort((a, b) => {
-        const dateA = new Date(a.group);
-        const dateB = new Date(b.group);
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
         return dateA - dateB;
       });
       res.json(results);
@@ -402,6 +402,61 @@ router.get("/uids/by/location", (req, res) => {
     });
 });
 
+//
+router.get("/certifications/cloud/certification", (req, res) => {
+  certificationSchema.aggregate([
+    { $group: { _id: "$certification", count: { $sum: 1 } } },
+    { $project: { work:"$_id" ,group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    { $sort: { value: -1 } },                                 // sort descending
+    { $limit: 50 }                                          // choose the number of groups
+  ])
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving how many times a parameter repeats');
+    });
+});
+
+// badges or not badges sorted alfabetically
+router.get("/certifications/badges/sorted", (req, res) => {
+  const { parametr } = req.params;
+  certificationSchema.aggregate([
+    { $group: { _id: "$type", count: { $sum: 1 } } },
+    { $project: { group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    { $sort: { value: -1 } },                                 // sort descending
+    //{ $limit: 10 }                                          // choose the number of groups
+  ])
+    .then((results) => {
+      //sort alfabetically
+      results.sort((a, b) => {
+        if (a.group === null && b.group !== null) {
+          return -1;
+        }
+        if (a.group !== null && b.group === null) {
+          return 1;
+        }
+        if (a.group === null && b.group === null) {
+          return 0;
+        }
+        const nameA = a.group.toLowerCase();
+        const nameB = b.group.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Error retrieving how many times a parameter repeats');
+    });
+});
 
 
 
