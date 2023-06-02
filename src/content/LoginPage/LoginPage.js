@@ -107,7 +107,6 @@ const LoginPage = ({ user, setUser }) => {
                                 <Button onClick={handleLoginRequest} id="log-in-button" renderIcon={ArrowRight} className="log-in-button">
                                     Log in
                                 </Button>
-
                             </>
                         )}
                     </Theme>

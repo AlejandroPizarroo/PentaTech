@@ -406,7 +406,7 @@ router.get("/uids/by/location", (req, res) => {
 router.get("/certifications/cloud/certification", (req, res) => {
   certificationSchema.aggregate([
     { $group: { _id: "$certification", count: { $sum: 1 } } },
-    { $project: { work:"$_id" ,group: "$_id", value: "$count", _id: 0 } }, //modify json fields
+    { $project: { word:"$_id" ,group: "$_id", value: "$count", _id: 0 } }, //modify json fields
     { $sort: { value: -1 } },                                 // sort descending
     { $limit: 50 }                                          // choose the number of groups
   ])
