@@ -23,15 +23,18 @@ function getRecommendations(ibmCerts, courseraCerts) {
         certAndRecommendPerc.push(percentage);
         recommendedCertificationsPerc.push(certAndRecommendPerc);
     }
-    let ibmCertsAndRecommendations = ibmCerts;
+    let ibmCertsAndRecommendationsArr = [];
+    let recommendedCertsArray = [];
     for(let i = recommendedCertificationsPerc.length - 1; i > -1; i--) {
         let recommendedCertificationAndPercentage = {
             recommendedCert: recommendedCertificationsPerc[i][0],
             percentage: recommendedCertificationsPerc[i][1]
         }
-        ibmCertsAndRecommendations.unshift(recommendedCertificationAndPercentage);
+        recommendedCertsArray.unshift(recommendedCertificationAndPercentage);
     }
-    return ibmCertsAndRecommendations;
+    ibmCertsAndRecommendationsArr.push(recommendedCertsArray);
+    ibmCertsAndRecommendationsArr.push(ibmCerts);
+    return ibmCertsAndRecommendationsArr;
 }
 
 module.exports = getRecommendations;
