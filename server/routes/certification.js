@@ -131,26 +131,51 @@ router.get("/certifications/count/stock/date", (req, res) => {
 // along with all the parameters
 router.get("/certifications/uid/:uid", (req,res) => {
     let ibmAndRecommendations = [];
-    const { uid } = req.params
+   // let ibmCerts = [];
+    const { uid } = req.params;
     certificationSchema
-    .find({}, { _id: 0, uid: 0  })
+    .find({}, { _id: 0, uid: 0})
     .where('uid')
     .all([uid])
     .then((data) =>
         {
-             fetch('http://localhost:5000/api/coursera/list/certification')
+            let workLocationOrg = {};
+            const transformedData = data.reduce((acc, item, index) => {
+                if (index === 0) {
+                    const { work_location, org } = item;
+                    workLocationOrg = { work_location, org };
+                    acc.push({ certification: item.certification, issue_date: item.issue_date, type: item.type });
+                } else {
+                    acc.push({ certification: item.certification, issue_date: item.issue_date, type: item.type });
+                }
+                return acc;
+            }, []);
+            fetch('http://localhost:5000/api/coursera/list/certification')
                 .then(response => response.json())
                 .then((response) => {
-                    ibmAndRecommendations = getRecommendations(data, response);
+                    ibmAndRecommendations = getRecommendations(transformedData, response);
+                    ibmAndRecommendations.unshift(workLocationOrg);
                     res.json(ibmAndRecommendations)
                 })
                 .catch((err) => {
                     console.log(err);
                 });
-        }
-        )
+        })
     .catch((error) => res.json({ message: error}))
-})
+});
+
+router.get("/certifications/workLoc/org/uid/:uid", (req, res) => {
+    const { uid } = req.params;
+    certificationSchema
+        .findOne({uid}, {_id:0, uid:0, certification: 0, issue_date:0, type:0})
+        .then((data) => {
+            res.json(data);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send('Error retrieving organization and work location');
+        });
+});
 
 
 
