@@ -10,6 +10,7 @@ function getRecommendations(ibmCerts, courseraCerts) {
     for(let i = 0; i < numRecommendedCerts; i++) {
         recommendedCertifications.push(sortedAndNotDuplicated[i]);
     }
+    // array of arrays containg all recommended certs and percentages ---------------------
     let recommendedCertificationsPerc = [];
     for(let i = 0; i < recommendedCertifications.length; i++) {
         let certAndRecommendPerc = []
@@ -22,13 +23,15 @@ function getRecommendations(ibmCerts, courseraCerts) {
         certAndRecommendPerc.push(percentage);
         recommendedCertificationsPerc.push(certAndRecommendPerc);
     }
-    let recommendedCertificationsAndEmpCerts = []
-    let recommendedCertsObj = {
-        RecommendedCerts:recommendedCertificationsPerc
+    let ibmCertsAndRecommendations = ibmCerts;
+    for(let i = recommendedCertificationsPerc.length - 1; i > -1; i--) {
+        let recommendedCertificationAndPercentage = {
+            recommendedCert: recommendedCertificationsPerc[i][0],
+            percentage: recommendedCertificationsPerc[i][1]
+        }
+        ibmCertsAndRecommendations.unshift(recommendedCertificationAndPercentage);
     }
-    recommendedCertificationsAndEmpCerts.push(recommendedCertsObj);
-    recommendedCertificationsAndEmpCerts.push(ibmCerts);
-    return recommendedCertificationsAndEmpCerts;
+    return ibmCertsAndRecommendations;
 }
 
 module.exports = getRecommendations;
