@@ -15,7 +15,7 @@ function getRecommendations(ibmCerts, courseraCerts) {
             let ibmCertsArray = ibmCert.split(" ");
             let courseraCertArray = courseraCert.split(" ");
             let index = jaccard.index(ibmCertsArray, courseraCertArray);
-            if(index > 0){
+            if(index > 0 || index < 1){
                 recommendedCertAndIndex.push(courseraCert, index);
                 recommendationsUnsortedDuplicated.push(recommendedCertAndIndex);
             }

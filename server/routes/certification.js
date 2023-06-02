@@ -133,7 +133,7 @@ router.get("/certifications/uid/:uid", (req,res) => {
     let ibmAndRecommendations = [];
     const { uid } = req.params
     certificationSchema
-    .find()
+    .find({}, { _id: 0, uid: 0  })
     .where('uid')
     .all([uid])
     .then((data) =>
@@ -147,7 +147,6 @@ router.get("/certifications/uid/:uid", (req,res) => {
                 .catch((err) => {
                     console.log(err);
                 });
-
         }
         )
     .catch((error) => res.json({ message: error}))
