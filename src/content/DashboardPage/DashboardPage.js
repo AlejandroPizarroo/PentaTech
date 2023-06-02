@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
-import {
-    Theme,
-    Header,
-    HeaderName,
-    HeaderGlobalBar,
-    ExpandableSearch,
-    OverflowMenu,
-    OverflowMenuItem,
-    Column, Grid, Loading
-} from '@carbon/react';
-import { Content, Modal } from '@carbon/react';
+import { Theme, Header, HeaderName, HeaderGlobalBar, ExpandableSearch, OverflowMenu, OverflowMenuItem } from '@carbon/react';
+import { Content, Column, Grid, Loading, ComposedModal, ModalHeader, ModalBody } from '@carbon/react';
+import { Table, TableHead, TableRow, TableHeader, TableBody, TableCell } from '@carbon/react';
 import { User, Upload, Search } from '@carbon/react/icons';
 import {useNavigate} from 'react-router-dom';
-import ReactDOM from 'react-dom'
 import { MeterChart, AreaChart, DonutChart, WordCloudChart } from "@carbon/charts-react";
 import "@carbon/charts/styles.css";
 
 const DashboardPage = ({ user, setUser }) => {
-
-    const [certificationTotal, setCertificationTotal] = useState(0);
 
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
@@ -29,26 +18,6 @@ const DashboardPage = ({ user, setUser }) => {
     const loginNavigate = () => {
         setUser();
         navigate("/");
-    };
-
-    const [open, setOpen] = useState(false);
-    const ModalStateManager = ({renderLauncher: LauncherContent,
-                                   children: ModalContent}) => {
-        return (
-            <>
-                {!ModalContent || typeof document === 'undefined' ? null :
-                    ReactDOM.createPortal(<ModalContent open={open} setOpen={setOpen} />, document.body)}
-                {LauncherContent && <LauncherContent open={open} setOpen={setOpen} />}
-            </>
-        );
-    };
-
-    const [searchUid, setSearchUid] = useState('');
-    const searchFunction = () => {
-        if(document.getElementById("expandable-search").value.length === 12) {
-            setSearchUid(document.getElementById("expandable-search").value);
-            setOpen(true);
-        }
     };
 
     const fetchFunction = (vari, set, type, endpoint) => {
@@ -87,6 +56,7 @@ const DashboardPage = ({ user, setUser }) => {
     if(!certifications) {fetchFunction(certifications, setCertifications, 'summary', 'ibm/certifications/num/certification')}
 
     const [certificationTypes, setCertificationTypes] = useState('');
+    const [certificationTotal, setCertificationTotal] = useState(0);
     if(!certificationTypes) {fetchFunction(certificationTypes, setCertificationTypes, 'meter', 'ibm/certifications/badges/sorted')}
     const certificationTypesOptions = {
         "title": "Certifications by Type",
@@ -181,6 +151,37 @@ const DashboardPage = ({ user, setUser }) => {
         "theme": "g100"
     };
 
+    const [searchUid, setSearchUid] = useState('');
+    const [searching, setSearching] = useState(false);
+    const [modalLabel, setModalLabel] = useState('');
+    const [searchUidCertifications, setSearchUidCertifications] = useState('');
+    const [searchUidRecomendations, setSearchUidRecomendations] = useState('');
+    const certHeaders = ['Certification', 'Type', 'Issue Date'];
+    const recHeaders = ['Certification', 'Percentage'];
+    const searchFunction = (event) => {
+        if(event.key === 'Enter') {
+            setSearchUid(document.getElementById("expandable-search").value);
+            fetch('http://localhost:5000/api/ibm/certifications/uid/'+document.getElementById("expandable-search").value)
+                .then(response => response.json())
+                .then((res) => {
+                    console.log(res)
+                    if(res.length !== 0) {
+                        setModalLabel(res[0]["org"]+" / "+res[0]["work_location"]);
+                        setSearchUidRecomendations(res[1]);
+                        setSearchUidCertifications(res[2]);
+                    } else {
+                        setModalLabel('');
+                    }
+                    setSearching(true);
+                })
+        }
+    };
+
+    const closeModal = () => {
+        setSearching(false);
+        setSearchUid('')
+    };
+
     return (
         <>
             <script>
@@ -193,39 +194,87 @@ const DashboardPage = ({ user, setUser }) => {
                     </HeaderName>
                     <HeaderGlobalBar>
                         <div className="expandable-search">
-                            <ModalStateManager
-                                renderLauncher={({ setOpen }) => (
-                                    <ExpandableSearch
-                                        labelText=""
-                                        id="expandable-search"
-                                        renderIcon={() => <Search size={20} className="search-icon"/>}
-                                        size="lg"
-                                        placeholder="Search by Uid"
-                                        onChange={searchFunction}
-                                    />
-                                )}>
-                                {({ open, setOpen }) => (
-                                    <Theme theme="g100">
-                                        <Modal
-                                            passiveModal
-                                            modalHeading={searchUid}
-                                            modalLabel="Finance and Operations - Guadalajara, JAL, Mexico"
-                                            open={open}
-                                            onRequestClose={() => setOpen(false)}>
-                                            {/*<p>*/}
-                                            {/*    Custom domains direct requests for your apps in this Cloud Foundry*/}
-                                            {/*    organization to a URL that you own. A custom domain can be a shared*/}
-                                            {/*    domain, a shared subdomain, or a shared domain and host.*/}
-                                            {/*</p>*/}
-                                        </Modal>
-                                    </Theme>
-                                )}
-                            </ModalStateManager>
+                            <ExpandableSearch
+                                labelText=""
+                                id="expandable-search"
+                                renderIcon={() => <Search size={20} className="search-icon"/>}
+                                size="lg"
+                                placeholder="Search by Uid"
+                                onKeyDown={searchFunction}
+                            />
                         </div>
+                        {(searchUid) ? (
+                            (searching) ? (
+                                <Theme theme="g100">
+                                    <ComposedModal
+                                        open
+                                        size="md"
+                                        onClose={closeModal}>
+                                        <ModalHeader label={modalLabel} title={searchUid} />
+                                        <ModalBody>
+                                            {(modalLabel) ? (
+                                                <>
+                                                    <h4 className="certifications-header">Certifications</h4>
+                                                    <Table size="md" useZebraStyles={false}>
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                {certHeaders.map((header) => (
+                                                                    <TableHeader id={header.key} key={header}>
+                                                                        {header}
+                                                                    </TableHeader>
+                                                                ))}
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {searchUidCertifications.map((row) => (
+                                                                <TableRow key={row.id}>
+                                                                    {Object.keys(row)
+                                                                        .map((key) => {
+                                                                            return <TableCell key={key}>{row[key]}</TableCell>;
+                                                                        })}
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                    <h4 className="recommendations-header">Recommendations</h4>
+                                                    <Table size="md" useZebraStyles={false}>
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                {recHeaders.map((header) => (
+                                                                    <TableHeader id={header.key} key={header}>
+                                                                        {header}
+                                                                    </TableHeader>
+                                                                ))}
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {searchUidRecomendations.map((row) => (
+                                                                <TableRow key={row.id}>
+                                                                    {Object.keys(row)
+                                                                        .map((key) => {
+                                                                            return <TableCell key={key}>{row[key]}</TableCell>;
+                                                                        })}
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </>
+                                            ) : (
+                                                <p>
+                                                    There is no information for the Uid "{searchUid}".
+                                                    Remember that valid Uids are 12-character sequences
+                                                    beginning with 9 digits and ending in "IBM".
+                                                </p>
+                                            )}
+                                        </ModalBody>
+                                    </ComposedModal>
+                                </Theme>
+                            ) : (<Loading/>)
+                        ) : (<></>)}
                         <OverflowMenu
                             renderIcon={() => <Upload size={20} />}
                             size="lg"
-                            onClick={() => setOpen(true)}/>
+                        />
                         <OverflowMenu
                             flipped={true}
                             renderIcon={() => <User size={20}/>}
