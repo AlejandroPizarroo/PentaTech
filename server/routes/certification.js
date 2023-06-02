@@ -131,7 +131,15 @@ router.get("/certifications/count/stock/date", (req, res) => {
 // along with all the parameters
 router.get("/certifications/uid/:uid", (req,res) => {
     let ibmAndRecommendations = [];
-    const { uid } = req.params;
+    let { uid } = req.params;
+    let uidArray = uid.split("i");
+    if(uidArray.length === 2) {
+        uid = uidArray[0] + "IBM";
+    }
+    uidArray = uid.split("I");
+    if(uidArray.length === 2) {
+        uid = uidArray[0] + "IBM";
+    }
     certificationSchema
     .find({}, { _id: 0, uid: 0})
     .where('uid')
