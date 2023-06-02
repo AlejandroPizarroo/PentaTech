@@ -165,7 +165,6 @@ const DashboardPage = ({ user, setUser }) => {
                 .then(response => response.json())
                 .then(res => {
                     setSearching(true);
-                    console.log(res);
                     if(res.length !== 0) {
                         setModalLabel(res[0]["org"]+" / "+res[0]["work_location"]);
                         setSearchUidRecomendations(res[1]);
