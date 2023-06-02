@@ -138,13 +138,12 @@ router.get("/certifications/uid/:uid", (req,res) => {
     .all([uid])
     .then((data) =>
         {
-            //console.log(typeof data)
-
-                let workLocationOrg = [];
+            if(data[0] != undefined){
+                let workLocationOrg = {};
                 const transformedData = data.reduce((acc, item, index) => {
                     if (index === 0) {
                         const { work_location, org } = item;
-                        workLocationOrg.push({ work_location, org });
+                        workLocationOrg = { work_location, org };
                         acc.push({ certification: item.certification, issue_date: item.issue_date, type: item.type });
                     } else {
                         acc.push({ certification: item.certification, issue_date: item.issue_date, type: item.type });
@@ -161,8 +160,8 @@ router.get("/certifications/uid/:uid", (req,res) => {
                     .catch((err) => {
                         console.log(err);
                     });
-
-            //else res.json(data);
+            }
+            else res.json(data);
         })
     .catch((error) => res.json({ message: error}))
 });
