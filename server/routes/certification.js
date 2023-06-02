@@ -106,12 +106,16 @@ router.get("/certifications/count/top/:parametr", (req, res) => {
 });
 
 //issue date
+
 router.get("/certifications/count/stock/date", (req, res) => {
-  //const { parametr } = req.params; //parameter instead of only date
+  const oneYearAgo = new Date();
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
   certificationSchema.aggregate([
+    { $match: { issue_date: { $gte: oneYearAgo.toISOString().substring(0, 10) } } },
     { $group: { _id: "$issue_date", count: { $sum: 1 } } },
-    { $project: { group:"Certifications",date: "$_id", value: "$count", _id: 0 } }, //modify json fields
-    //{ $sort: { value: -1 } }                                 // sort descending
+    { $project: { group: "Certifications", date: "$_id", value: "$count", _id: 0 } },
+    { $sort: { date: 1 } } // sort ascending by date
   ])
     .then((results) => {
       results.sort((a, b) => {
