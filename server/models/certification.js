@@ -3,15 +3,14 @@ const mongoose = require("mongoose");
 const certificationSchema = mongoose.Schema({
     uid: {
         type: String,
-        required: true,
+        required: true
     },
     org: {
         type: String,
-        required: true,
+        required: true
     },
     work_location: {
         type: String,
-        required: true,
     },
     certification: {
         type: String,
@@ -19,12 +18,16 @@ const certificationSchema = mongoose.Schema({
     },
     issue_date: {
         type: String,
-        required: true,
     },
     type: {
         type: String,
+        required: true
+    },
+    key: {
+        type: String,
         required: true,
+        unique: true
     }
 });
 
-module.exports = mongoose.model("Certification", certificationSchema, "certifications")
+module.exports = mongoose.model("Certifications", certificationSchema, "certificationTest")

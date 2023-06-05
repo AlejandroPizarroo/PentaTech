@@ -15,10 +15,12 @@
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jaccard-index": "^0.2.0",
-    "mongoose": "^7.0.5"
+    "mongoose": "^7.0.5",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "concurrently": "^8.0.1",
