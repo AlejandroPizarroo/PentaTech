@@ -233,7 +233,9 @@ router.get("/certifications/num2/orgs", (req, res) => {
 
 router.get("/certifications/num/:field", (req, res) => {
   const field = req.params.field;
-  certificationSchema.distinct(field)
+  const query = { [field]: { $ne: "" } }; // Exclude empty values
+
+  certificationSchema.distinct(field, query)
     .then((values) => {
       const uniqueValuesCount = values.length;
       res.json({ count: uniqueValuesCount });
