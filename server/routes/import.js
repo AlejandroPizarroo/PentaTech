@@ -183,7 +183,8 @@ router.post('/upload2', upload.single('csv'), async (req, res) => {
 
   } catch (error) {
     console.error('Error:', error);
-    res.status(error.status || 500).json({ message: error.message || 'Error saving data' });
+    res.statusMessage = error.message 
+    res.status(error.status || 500).end;
   } finally {
     // Delete the uploaded file
     fs.unlinkSync(req.file.path);
