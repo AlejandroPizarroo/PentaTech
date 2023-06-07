@@ -108,19 +108,33 @@ router.post('/upload2', upload.single('csv'), async (req, res) => {
   try {
     const jsonArrayObj = await csvtojson().fromFile(req.file.path);
 
+    if (!jsonArrayObj[0]?.uid) {
+      throw { message: 'The CSV file must have a "uid" column', status: 400 };
+    }
+    if (!jsonArrayObj[0]?.certification) {
+      throw { message: 'The CSV file must have a "certification" column', status: 400 };
+    }
+    if (!jsonArrayObj[0]?.org) {
+      throw { message: 'The CSV file must have a "org" column', status: 400 };
+    }
+    if (!jsonArrayObj[0]?.type) {
+      throw { message: 'The CSV file must have a "type" column', status: 400 };
+    }
+
+
     const cleanedData = jsonArrayObj.map((row) => {
       if (!row.uid.trim()) {
         const errorMessage = `Null or empty "uid" found`;
-        throw { message: errorMessage, status: 200 };
+        throw { message: errorMessage, status: 400 };
       } else if (!row.certification.trim()) {
         const errorMessage = `Null or empty "certification" found for uid: ${row.uid.trim()}`;
-        throw { message: errorMessage, status: 200 };
+        throw { message: errorMessage, status: 400 };
       } else if (!row.org.trim()) {
         const errorMessage = `Null or empty "org" found for uid: ${row.uid.trim()}`;
-        throw { message: errorMessage, status: 200 };
+        throw { message: errorMessage, status: 400 };
       } else if (!row.type.trim()) {
         const errorMessage = `Null or empty "type" found for uid: ${row.uid.trim()}`;
-        throw { message: errorMessage, status: 200 };
+        throw { message: errorMessage, status: 400 };
       }
 
       const key = `${row.uid.trim()}-${row.certification.trim()}`;
@@ -130,8 +144,8 @@ router.post('/upload2', upload.single('csv'), async (req, res) => {
         certification: row.certification.trim(),
         key: key,
         org: row.org.trim(),
-        work_location: row.work_location.trim(),
-        issue_date: row.issue_date.trim(),
+        work_location: row.work_location?.trim() || '',
+        issue_date: row.issue_date?.trim() || '',
         type: row.type.trim(),
       };
     });
@@ -144,10 +158,10 @@ router.post('/upload2', upload.single('csv'), async (req, res) => {
 
     let duplicateCount = 0;
     let newCert = 0;
-
+    let realData= 0;
     for (const data of cleanedData) {
       const key = `${data.uid}-${data.certification}`;
-
+      realData = 1
       if (!uniqueKeys.has(key) && !existingKeys.includes(key)) {
         uniqueData.push(data);
         uniqueKeys.add(key);
@@ -159,9 +173,12 @@ router.post('/upload2', upload.single('csv'), async (req, res) => {
       }
     }
 
-    if(newCert === 0){
+    if(newCert === 0 && realData === 1){
       const errorMessage = 'All the data is duplicated'
-      throw { message: errorMessage, status: 200 };
+      throw { message: errorMessage, status: 400 };
+    }else if(realData === 0){
+      const errorMessage = 'Invalid .csv file'
+      throw { message: errorMessage, status: 400 };
     }
     //console.log(uniqueData);
     //console.log(uniqueKeys);
