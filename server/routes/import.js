@@ -109,16 +109,16 @@ router.post('/upload2', upload.single('csv'), async (req, res) => {
     const jsonArrayObj = await csvtojson().fromFile(req.file.path);
 
     if (!jsonArrayObj[0]?.uid) {
-      throw { message: 'The CSV file must have a "uid" column', status: 400 };
+      throw { message: 'The CSV file must have a "uid" values', status: 400 };
     }
     if (!jsonArrayObj[0]?.certification) {
-      throw { message: 'The CSV file must have a "certification" column', status: 400 };
+      throw { message: 'The CSV file must have a "certification" values', status: 400 };
     }
     if (!jsonArrayObj[0]?.org) {
-      throw { message: 'The CSV file must have a "org" column', status: 400 };
+      throw { message: 'The CSV file must have a "org" values', status: 400 };
     }
     if (!jsonArrayObj[0]?.type) {
-      throw { message: 'The CSV file must have a "type" column', status: 400 };
+      throw { message: 'The CSV file must have a "type" values', status: 400 };
     }
 
 
