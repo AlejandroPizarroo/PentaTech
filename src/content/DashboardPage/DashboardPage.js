@@ -300,9 +300,6 @@ const DashboardPage = ({ user, setUser }) => {
                                 preventCloseOnClickOutside={true}
                                 onRequestClose={() => setUploadData(false)}>
                                 <FileUploaderDropContainer
-                                    /*id="file-uploader"
-                                    buttonLabel="Drag and drop files here or click to upload"
-                                    accept={['.csv']}*/
                                     accept={['.csv']}
                                     labelText="Drag and drop a CSV file here or click to upload"
                                     onAddFiles={handleFileSelect}
