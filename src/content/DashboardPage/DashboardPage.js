@@ -26,15 +26,17 @@ const DashboardPage = ({ user, setUser }) => {
             .then(res => {
                 if(type === 'summary') {
                     set(res.count);
+                } else if(type === 'update') {
+                    set(res.date);
                 } else {
-                    if(type === 'meter') {
+                    if (type === 'meter') {
                         let total = 0;
-                        for(let i in res) {
+                        for (let i in res) {
                             total += res[i].value;
                         }
                         setCertificationTotal(total);
                     }
-                    if(res[0].group === null || res[0].date === null) {
+                    if(res[0].group === '' || res[0].date === '') {
                         set(res.splice(1, res.length));
                     } else {
                         set(res);
@@ -183,6 +185,9 @@ const DashboardPage = ({ user, setUser }) => {
 
     const [uploadData, setUploadData] = useState(false);
 
+    const [lastUpdate, setLastUpdate] = useState('');
+    if(!lastUpdate) {fetchFunction(lastUpdate, setLastUpdate, 'update', 'import/newest-update')}
+
     return (
         <>
             <script>
@@ -282,16 +287,13 @@ const DashboardPage = ({ user, setUser }) => {
                                 open={uploadData}
                                 size="xs"
                                 modalHeading="Upload data"
-                                modalLabel="Last update: "
+                                modalLabel={"Last update: " + lastUpdate}
                                 preventCloseOnClickOutside={true}
                                 onRequestClose={() => setUploadData(false)}>
                                 <FileUploaderDropContainer
-                                    labelText="Drag and drop files here or click to upload"
-                                    multiple={true}
-                                    accept={['image/jpeg', 'image/png']}
-                                    disabled={false}
-                                    name=""
-                                    tabIndex={0}
+                                    id="file-uploader"
+                                    buttonLabel="Drag and drop files here or click to upload"
+                                    accept={['.csv']}
                                 />
                             </Modal>
                         </Theme>
