@@ -184,6 +184,15 @@ const DashboardPage = ({ user, setUser }) => {
     };
 
     const [uploadData, setUploadData] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileSelect = (event) => {
+        const files = event.target.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+            setSelectedFile(file);
+        }
+    };
 
     const [lastUpdate, setLastUpdate] = useState('');
     if(!lastUpdate) {fetchFunction(lastUpdate, setLastUpdate, 'update', 'import/newest-update')}
@@ -291,10 +300,15 @@ const DashboardPage = ({ user, setUser }) => {
                                 preventCloseOnClickOutside={true}
                                 onRequestClose={() => setUploadData(false)}>
                                 <FileUploaderDropContainer
-                                    id="file-uploader"
+                                    /*id="file-uploader"
                                     buttonLabel="Drag and drop files here or click to upload"
+                                    accept={['.csv']}*/
                                     accept={['.csv']}
+                                    labelText="Drag and drop a CSV file here or click to upload"
+                                    onAddFiles={handleFileSelect}
+                                    multiple={false}
                                 />
+                                {selectedFile && <p>Selected file: {selectedFile.name}</p>}
                             </Modal>
                         </Theme>
                         <OverflowMenu

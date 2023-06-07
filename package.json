@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@carbon/charts-react": "^1.7.6",
+    "@carbon/charts-react": "^1.8.0",
     "@carbon/react": "^1.27.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
