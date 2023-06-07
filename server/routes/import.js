@@ -86,14 +86,16 @@ router.post('/upload', upload.single('csv'), async (req, res) => {
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
   
     const savedDate = await importDateSchema.create({date: formattedDate})
     const savedData = await certificationSchema.create(uniqueData);
     
     
     console.log('Data saved successfully');
-    res.status(200).send(`Data saved successfully! ${duplicateCount} duplicates found`);
+    res.status(200).send(`${newCert} New data saved successfully! ${duplicateCount} duplicates found`);
   } catch (error) {
     console.error('Error:', error);
     res.status(400).send(`Error: ${error.message}`);
