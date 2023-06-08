@@ -158,7 +158,7 @@ const DashboardPage = ({ user, setUser }) => {
     const [searching, setSearching] = useState(false);
     const [modalLabel, setModalLabel] = useState('');
     const [searchUidCertifications, setSearchUidCertifications] = useState('');
-    const [searchUidRecomendations, setSearchUidRecomendations] = useState('');
+    const [searchUidRecommendations, setSearchUidRecommendations] = useState('');
     const certHeaders = ['Certification', 'Type', 'Issue Date'];
     const recHeaders = ['Certification', 'Percentage'];
     const searchFunction = (event) => {
@@ -170,7 +170,7 @@ const DashboardPage = ({ user, setUser }) => {
                     setSearching(true);
                     if(res.length !== 0) {
                         setModalLabel(res[0]["org"]+" / "+res[0]["work_location"]);
-                        setSearchUidRecomendations(res[1]);
+                        setSearchUidRecommendations(res[1]);
                         setSearchUidCertifications(res[2]);
                     } else {
                         setModalLabel('');
@@ -190,14 +190,17 @@ const DashboardPage = ({ user, setUser }) => {
     const uploadFunction = (event) => {
         setUploading(true);
         const formData = new FormData();
-        formData.append('csv', event.target.files[0]);
-        fetch('http://localhost:5000/api/import/upload2', {
+        if(event.dataTransfer) {
+            formData.append('csv', event.dataTransfer.files[0]);
+        } else {
+            formData.append('csv', event.target.files[0]);
+        }
+        fetch('http://localhost:5000/api/import/upload', {
             method: 'POST',
             body: formData
         })
             .then(response => response.json())
             .then((response) => {
-                console.log(response);
                 setUploadMessage(response.message);
                 setUploading(false);
             })
@@ -277,7 +280,7 @@ const DashboardPage = ({ user, setUser }) => {
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                    {searchUidRecomendations.map((row) => (
+                                                    {searchUidRecommendations.map((row) => (
                                                         <TableRow key={row.id}>
                                                             {Object.keys(row)
                                                                 .map((key) => {
@@ -312,7 +315,7 @@ const DashboardPage = ({ user, setUser }) => {
                                 modalLabel={"Last update: " + lastUpdate}
                                 preventCloseOnClickOutside={true}
                                 onRequestClose={() => setUploadData(false)}>
-                                <a className="download-link" href="/IBM-Certifications-Dashboard-Template.csv" download="IBM-Certifications-Dashboard-Template.csv">Make sure to use this template.</a>
+                                <a className="download-link" href="/IBM-Certifications-Dashboard-Template.csv" download="IBM-Certifications-Dashboard-Template.csv">Make sure to use this format.</a>
                                 <div className="padding"/>
                                 <FileUploaderDropContainer
                                     accept={['.csv']}
