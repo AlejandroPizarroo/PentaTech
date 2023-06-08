@@ -203,6 +203,18 @@ const DashboardPage = ({ user, setUser }) => {
             .then((response) => {
                 setUploadMessage(response.message);
                 setUploading(false);
+                setUids('');
+                setOrgs('');
+                setLocations('');
+                setCertifications('');
+                setCertificationTypes('');
+                setCertificationDates('');
+                setCertificationOrgs('');
+                setUidOrgs('');
+                setCertificationLocations('');
+                setUidLocations('');
+                setIndustrySkills('');
+                setIbmCertifications('');
             })
             .catch(_ => {
                 setUploadMessage('Internal server error (Please try again later)');
