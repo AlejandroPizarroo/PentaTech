@@ -5,6 +5,7 @@ import { Table, TableHead, TableRow, TableHeader, TableBody, TableCell, FileUplo
 import { User, Upload, Search } from '@carbon/react/icons';
 import {useNavigate} from 'react-router-dom';
 import { MeterChart, AreaChart, DonutChart, WordCloudChart } from "@carbon/charts-react";
+import FormData from 'form-data';
 import "@carbon/charts/styles.css";
 
 const DashboardPage = ({ user, setUser }) => {
@@ -184,14 +185,26 @@ const DashboardPage = ({ user, setUser }) => {
     };
 
     const [uploadData, setUploadData] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
-
-    const handleFileSelect = (event) => {
-        const files = event.target.files;
-        if (files && files.length > 0) {
-            const file = files[0];
-            setSelectedFile(file);
-        }
+    const [uploading, setUploading] = useState(false);
+    const [uploadMessage, setUploadMessage] = useState('');
+    const uploadFunction = (event) => {
+        setUploading(true);
+        const formData = new FormData();
+        formData.append('csv', event.target.files[0]);
+        fetch('http://localhost:5000/api/import/upload2', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then((response) => {
+                console.log(response);
+                setUploadMessage(response.message);
+                setUploading(false);
+            })
+            .catch(_ => {
+                setUploadMessage('Internal server error (Please try again later)');
+                setUploading(false);
+            })
     };
 
     const [lastUpdate, setLastUpdate] = useState('');
@@ -299,13 +312,16 @@ const DashboardPage = ({ user, setUser }) => {
                                 modalLabel={"Last update: " + lastUpdate}
                                 preventCloseOnClickOutside={true}
                                 onRequestClose={() => setUploadData(false)}>
+                                <a className="download-link" href="/IBM-Certifications-Dashboard-Template.csv" download="IBM-Certifications-Dashboard-Template.csv">Make sure to use this template.</a>
+                                <div className="padding"/>
                                 <FileUploaderDropContainer
                                     accept={['.csv']}
                                     labelText="Drag and drop a CSV file here or click to upload"
-                                    onAddFiles={handleFileSelect}
+                                    onAddFiles={uploadFunction}
                                     multiple={false}
                                 />
-                                {selectedFile && <p>Selected file: {selectedFile.name}</p>}
+                                {uploading && <Loading/>}
+                                {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
                             </Modal>
                         </Theme>
                         <OverflowMenu

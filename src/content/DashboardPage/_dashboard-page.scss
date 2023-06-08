@@ -2,8 +2,6 @@
 @use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/theme' as *;
 @use '@carbon/react/scss/breakpoint' as *;
-//@import "https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed|IBM+Plex+Sans:400,600&display=swap";
-//@import "https://unpkg.com/carbon-components/css/carbon-components.min.css";
 
 .search-icon {
   position: absolute;
@@ -103,3 +101,22 @@
   margin-top: $spacing-06;
 }
 
+.certifications-header {
+  margin-bottom: $spacing-05;
+  text-align: center;
+}
+
+.recommendations-header {
+  margin-top: $spacing-07;
+  margin-bottom: $spacing-05;
+  text-align: center;
+}
+
+.upload-message {
+  padding-top: $spacing-04;
+  text-align: center;
+}
+
+.padding {
+  margin-bottom: $spacing-04;
+}
