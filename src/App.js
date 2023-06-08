@@ -18,9 +18,9 @@ function App() {
                 <Route
                     path='dashboard'
                     element={
-                        // <PrivateRoute user={user}>
+                        <PrivateRoute user={user}>
                             <DashboardPage user={user} setUser={setUser}/>
-                        // </PrivateRoute>
+                        </PrivateRoute>
                     }
                 />
                 <Route path="*" element={<ErrorPage />}/>
