@@ -29,6 +29,7 @@ router.post('/upload', upload.single('csv'), async (req, res) => {
     }
 
 
+
     const cleanedData = jsonArrayObj.map((row) => {
       if (!row.uid.trim()) {
         const errorMessage = `Null or empty "uid" found.`;
@@ -42,6 +43,19 @@ router.post('/upload', upload.single('csv'), async (req, res) => {
       } else if (!row.type.trim()) {
         const errorMessage = `Null or empty "type" found for "uid": ${row.uid.trim()}.`;
         throw { message: errorMessage, status: 400 };
+      }
+    
+      
+      if (!/^\d{9}IBM$/.test(row.uid)) { 
+        const errorMessage = `Invalid "uid" format. Valid Uids are 12-character sequences beginning with 9 digits and ending in "IBM".`;
+        throw { message: errorMessage, status: 400 };
+      }
+      
+      if(row.issue_date){
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(row.issue_date)) { 
+          const errorMessage = `Invalid date format for "uid": ${row.uid.trim()}. Use (yyyy-mm-dd) or no value.`;
+          throw { message: errorMessage, status: 400 };
+        }
       }
 
       const key = `${row.uid.trim()}-${row.certification.trim()}`;
