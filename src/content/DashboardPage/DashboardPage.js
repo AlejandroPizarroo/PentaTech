@@ -162,17 +162,22 @@ const DashboardPage = ({ user, setUser }) => {
     const certHeaders = ['Certification', 'Type', 'Issue Date'];
     const recHeaders = ['Certification', 'Percentage'];
     const searchFunction = (event) => {
+        // Si se presiona enter mientras se tiene seleccionada la barra de búsqueda se define el valor en la barra como el valor de búsqueda
         if(event.key === 'Enter' && document.getElementById("expandable-search").value!=='') {
             setSearchUid(document.getElementById("expandable-search").value);
+            // Se hace el GET de las certificaciones y recomendaciones del usuario escrito
             fetch('http://localhost:5000/api/ibm/certifications/uid/'+document.getElementById("expandable-search").value)
                 .then(response => response.json())
                 .then(res => {
+                    // Cuando se obtiene la información entones se despliega el overlay que indica que se está haciendo una búsqueda
                     setSearching(true);
                     if(res.length !== 0) {
+                        // Si la búsqueda es exitosa entonces se separan y almacenan las recomendaciones, certificaciones e información laboral (ubicación y organización) del empleado
                         setModalLabel(res[0]["org"]+" / "+res[0]["work_location"]);
                         setSearchUidRecommendations(res[1]);
                         setSearchUidCertifications(res[2]);
                     } else {
+                        // Si la búsqueda no es exitosa entonces se le indica al usuario que no se encontró información laboral del empleado
                         setModalLabel('');
                     }
                 })
@@ -188,21 +193,27 @@ const DashboardPage = ({ user, setUser }) => {
     const [uploading, setUploading] = useState(false);
     const [uploadMessage, setUploadMessage] = useState('');
     const uploadFunction = (event) => {
+        // Cambiar de valor la variable que controla el overlay que indica al usuario que se está subiendo el archivo
         setUploading(true);
         const formData = new FormData();
+        // Dependiendo del tipo de movimiento (arrastrar o seleccionar) se identifica el archivo a subirse
         if(event.dataTransfer) {
             formData.append('csv', event.dataTransfer.files[0]);
         } else {
             formData.append('csv', event.target.files[0]);
         }
+        // Se hace el POST a la base de datos en MongoDB y se envía el archivo subido
         fetch('http://localhost:5000/api/import/upload', {
             method: 'POST',
             body: formData
         })
             .then(response => response.json())
             .then((response) => {
+                // Si el archivo se subió con exito se imprime el mensaje de retroalimentación
                 setUploadMessage(response.message);
+                // Si el archivo se subió con éxito se le deja de indicar al usuario que se está subiendo un archivo
                 setUploading(false);
+                // Se le indica a las variables que almacenan la información de las gráficas que tienen que volver a solicitar
                 setUids('');
                 setOrgs('');
                 setLocations('');
@@ -215,9 +226,12 @@ const DashboardPage = ({ user, setUser }) => {
                 setUidLocations('');
                 setIndustrySkills('');
                 setIbmCertifications('');
+                setLastUpdate('');
             })
             .catch(_ => {
+                // Si el archivo no se subió con éxito se imprime el mensaje de retroalimentación
                 setUploadMessage('Internal server error (Please try again later)');
+                // Si el archivo no se subió con éxito se le deja de indicar al usuario que se está subiendo un archivo
                 setUploading(false);
             })
     };
@@ -236,6 +250,7 @@ const DashboardPage = ({ user, setUser }) => {
                         <span style={{ fontWeight: 'bold' }}>Certifications Dashboard</span>
                     </HeaderName>
                     <HeaderGlobalBar>
+                        {/*Barra de búsqueda expandible de la librería de @carbon/react*/}
                         <div className="expandable-search">
                             <ExpandableSearch
                                 labelText=""
@@ -243,19 +258,27 @@ const DashboardPage = ({ user, setUser }) => {
                                 renderIcon={() => <Search size={20} className="search-icon"/>}
                                 size="lg"
                                 placeholder="Search by Uid"
+                                // Cada vez que se presiona una tecla se manda llamar la función searchFunction
                                 onKeyDown={searchFunction}
                             />
                         </div>
+                        {/*Si se está buscando un empleado y aún no se ha hecho el GET despliega el overlay que indica al usuario que se está cargando*/}
                         {searchUid ? (
+                            // Si ya se hizo el GET entonces se despliega el modal
                             (searching) ? (
                                 <Modal
                                     open
+                                    // El modal se despliega cada vez que se hace el GET
                                     passiveModal={true}
+                                    // El modal únicamente se cierra cuando se presiona la "X"
                                     preventCloseOnClickOutside={true}
+                                    // Se despliega la id del empleado
                                     modalHeading={searchUid}
+                                    // Se despliega la información laboral del empleado
                                     modalLabel={modalLabel}
                                     onRequestClose={closeModal}
                                 >
+                                    {/*Si la búsqueda encontró información del empleado que se buscó se generan dinámicamente las tablas en base a la cantidad de información que se recibió*/}
                                     {modalLabel ? (
                                         <>
                                             <h4 className="certifications-header">Certifications</h4>
@@ -304,6 +327,7 @@ const DashboardPage = ({ user, setUser }) => {
                                             </Table>
                                         </>
                                     ):(
+                                        // Si no se encontró información del empleado que se buscó entonces se le indica al usuario los criterios para una búsqueda exitosa en caso de que haya ocurrido un error
                                         <p>
                                             There is no information for the Uid "{searchUid}".
                                             Remember that valid Uids are 12-character sequences
@@ -313,29 +337,40 @@ const DashboardPage = ({ user, setUser }) => {
                                 </Modal>
                             ):(<Loading/>)
                         ):(<></>)}
+                        {/*Botón que controla el modal para subir archivos*/}
                         <OverflowMenu
+                            // Cuando se presiona el botón cambia el valor de la variable uploadData
                             onClick={() => setUploadData(true)}
+                            // Se utiliza el ícono de Upload de la libreria @carbon/react/icons
                             renderIcon={() => <Upload size={20} />}
                             size="lg"
                         />
                         <Theme theme="g100">
                             <Modal
                                 passiveModal={true}
+                                // Cuando la variable uploadData es verdadera (es decir se presiona el botón) se despliega el modal
                                 open={uploadData}
                                 size="xs"
                                 modalHeading="Upload data"
+                                // Se despliega la variable que almacena la última fecha de actualización de la base de datos
                                 modalLabel={"Last update: " + lastUpdate}
+                                // Únicamente se cierra el modal cuando el usuario da click a la "X"
                                 preventCloseOnClickOutside={true}
                                 onRequestClose={() => setUploadData(false)}>
+                                {/*Existe un texto con un hipervínculo para descargar el formato en el cual se deben subir los archivos*/}
                                 <a className="download-link" href="/IBM-Certifications-Dashboard-Template.csv" download="IBM-Certifications-Dashboard-Template.csv">Make sure to use this format.</a>
                                 <div className="padding"/>
+                                {/*Se le da al usuario un espacio para subir el archivo seleccionándolo o arrastrándolo*/}
+                                {/*El espacio solo permite subir un único archivo .csv y se manda llamar la función uploadFunction*/}
                                 <FileUploaderDropContainer
                                     accept={['.csv']}
                                     labelText="Drag and drop a CSV file here or click to upload"
                                     onAddFiles={uploadFunction}
                                     multiple={false}
                                 />
+                                {/*Si se está subiendo un archivo se despliega el overlay que indica al usuario que se está cargando*/}
                                 {uploading && <Loading/>}
+                                {/*Si ya se subió un archivo se le indica al usuario el status de la operación*/}
                                 {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
                             </Modal>
                         </Theme>
