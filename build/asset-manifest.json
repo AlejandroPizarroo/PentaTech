@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.85ca382b.css",
-    "main.js": "/static/js/main.d78def12.js",
+    "main.js": "/static/js/main.e7886db3.js",
     "static/media/homePageImage.jpg": "/static/media/homePageImage.a3b7fe75d49c5c1903bd.jpg",
     "static/media/loginPageImage.jpg": "/static/media/loginPageImage.e96a9582f948c60f9311.jpg",
     "static/media/tuca-enojado.gif": "/static/media/tuca-enojado.ef790cddebc40b6d53cf.gif",
@@ -189,6 +189,6 @@
   },
   "entrypoints": [
     "static/css/main.85ca382b.css",
-    "static/js/main.d78def12.js"
+    "static/js/main.e7886db3.js"
   ]
 }
