@@ -25,6 +25,7 @@ const LoginPage = ({ user, setUser }) => {
         data = new URLSearchParams()
         data.append('email', userEmail ? userEmail.toString(): ' ')
         otpCreationRequest.body = data
+        //console.log(otpCreationRequest.body.toString());
         fetch('http://localhost:5000/api/login/requestOtpCreation', otpCreationRequest)
             .then(response => response.json())
             .then(_ => {

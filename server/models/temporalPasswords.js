@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
-//const emailRegex = /^[\w.%+-]+@ibm\.com$/i;
-const emailRegex = /^[\w.%+-]+@tec\.mx$/i;
+const emailRegexIBM = /^[\w.%+-]+@ibm\.com$/i;
+const emailRegexTec = /^[\w.%+-]+@tec\.mx$/i;
 
 const temporalPasswordsSchema = new Schema(
     {
@@ -11,7 +11,7 @@ const temporalPasswordsSchema = new Schema(
             unique: true,
             validate: {
                 validator: function (v) {
-                    return emailRegex.test(v);
+                    return emailRegexTec.test(v) || emailRegexIBM.test(v);
                 },
                 message: props => `${props.value} is not a valid email address!`
             }

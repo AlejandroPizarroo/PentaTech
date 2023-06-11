@@ -3,9 +3,9 @@ import {Header, HeaderName, Theme, Content, PasswordInput, Button} from "@carbon
 import {ArrowRight} from '@carbon/react/icons';
 import { Navigate } from "react-router-dom";
 
-const otpVerification = (password) => {
+const otpVerification = (email, password) => {
     return new Promise((resolve) => {
-        fetch(`http://localhost:5000/api/login/requestOtpVerification/${password}`)
+        fetch(`http://localhost:5000/api/login/requestOtpVerification/${password}/${email}`)
             .then(response => response.json())
             .then((res) => {
                 if(res.success) {
@@ -24,7 +24,7 @@ const PrivateRoute = ({children, user}) => {
     useEffect(() => {
         (async function() {
             try {
-                setAuth(await otpVerification(user.password));
+                setAuth(await otpVerification(user.email, user.password));
             }
             catch {
                 setAuth(2);
