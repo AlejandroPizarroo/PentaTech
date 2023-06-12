@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 const otpVerification = (email, password) => {
     return new Promise((resolve) => {
-        fetch(`http://192.168.1.70/api/login/requestOtpVerification/${password}/${email}`)
+        fetch(`https://ibm-server.ddns.net/api/login/requestOtpVerification/${password}/${email}`)
             .then(response => response.json())
             .then((res) => {
                 if(res.success) {
