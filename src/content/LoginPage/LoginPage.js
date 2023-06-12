@@ -26,7 +26,7 @@ const LoginPage = ({ user, setUser }) => {
         data.append('email', userEmail ? userEmail.toString(): ' ')
         otpCreationRequest.body = data
         //console.log(otpCreationRequest.body.toString());
-        fetch('https://healro1298.me/api/login/requestOtpCreation', otpCreationRequest)
+        fetch('http://192.168.1.70/api/login/requestOtpCreation', otpCreationRequest)
             .then(response => response.json())
             .then(_ => {
                 setEmailError('')

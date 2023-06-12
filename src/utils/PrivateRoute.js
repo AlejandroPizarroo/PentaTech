@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 const otpVerification = (email, password) => {
     return new Promise((resolve) => {
-        fetch(`https://healro1298.me/api/login/requestOtpVerification/${password}/${email}`)
+        fetch(`http://192.168.1.70/api/login/requestOtpVerification/${password}/${email}`)
             .then(response => response.json())
             .then((res) => {
                 if(res.success) {

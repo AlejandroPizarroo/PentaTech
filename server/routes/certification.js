@@ -162,7 +162,7 @@ router.get("/certifications/uid/:uid", (req,res) => {
                     }
                     return acc;
                 }, []);
-                fetch('https://healro1298.me/api/coursera/list/certification')
+                fetch('http://192.168.1.70/api/coursera/list/certification')
                     .then(response => response.json())
                     .then((response) => {
                         ibmAndRecommendations = getRecommendations(transformedData, response);
