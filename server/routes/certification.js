@@ -162,7 +162,7 @@ router.get("/certifications/uid/:uid", (req,res) => {
                     }
                     return acc;
                 }, []);
-                fetch('https://ibm-server.ddns.net/api/coursera/list/certification')
+                fetch('https://ibm-cd.me/api/coursera/list/certification')
                     .then(response => response.json())
                     .then((response) => {
                         ibmAndRecommendations = getRecommendations(transformedData, response);

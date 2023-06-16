@@ -22,7 +22,7 @@ const DashboardPage = ({ user, setUser }) => {
     };
 
     const fetchFunction = (vari, set, type, endpoint) => {
-        fetch('https://ibm-server.ddns.net/api/'+endpoint)
+        fetch('https://ibm-cd.me/api/'+endpoint)
             .then(response => response.json())
             .then(res => {
                 if(type === 'summary') {
@@ -166,7 +166,7 @@ const DashboardPage = ({ user, setUser }) => {
         if(event.key === 'Enter' && document.getElementById("expandable-search").value!=='') {
             setSearchUid(document.getElementById("expandable-search").value);
             // Se hace el GET de las certificaciones y recomendaciones del usuario escrito
-            fetch('https://ibm-server.ddns.net/api/ibm/certifications/uid/'+document.getElementById("expandable-search").value)
+            fetch('https://ibm-cd.me/api/ibm/certifications/uid/'+document.getElementById("expandable-search").value)
                 .then(response => response.json())
                 .then(res => {
                     // Cuando se obtiene la información entones se despliega el overlay que indica que se está haciendo una búsqueda
@@ -203,7 +203,7 @@ const DashboardPage = ({ user, setUser }) => {
             formData.append('csv', event.target.files[0]);
         }
         // Se hace el POST a la base de datos en MongoDB y se envía el archivo subido
-        fetch('https://ibm-server.ddns.net/api/import/upload', {
+        fetch('https://ibm-cd.me/api/import/upload', {
             method: 'POST',
             body: formData
         })

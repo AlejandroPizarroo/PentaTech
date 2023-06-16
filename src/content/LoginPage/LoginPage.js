@@ -26,7 +26,7 @@ const LoginPage = ({ user, setUser }) => {
         data.append('email', userEmail ? userEmail.toString(): ' ')
         otpCreationRequest.body = data
         //console.log(otpCreationRequest.body.toString());
-        fetch('https://ibm-server.ddns.net/api/login/requestOtpCreation', otpCreationRequest)
+        fetch('https://ibm-cd.me/api/login/requestOtpCreation', otpCreationRequest)
             .then(response => response.json())
             .then(_ => {
                 setEmailError('')
